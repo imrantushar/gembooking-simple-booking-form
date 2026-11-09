@@ -4,7 +4,7 @@
  * Plugin Name: GemBooking Simple Booking Form
  * Plugin URI: https://gembooking.net
  * Description: A simple appointment booking form block. Visitors pick a date and time, you confirm by email. No setup screens, double-booking protected.
- * Version: 0.1.0
+ * Version: 1.0.0
  * Author: Kodezen
  * Author URI: https://kodezen.com
  * License: GPLv2 or later
@@ -73,7 +73,7 @@ final class GembookingSimpleBookingForm {
 	}
 
 	public function define_constants() {
-		define( 'GSBF_VERSION', '0.1.0' );
+		define( 'GSBF_VERSION', '1.0.0' );
 		define( 'GSBF_SETTINGS_NAME', 'gsbf_settings' );
 		define( 'GSBF_PLUGIN_FILE', __FILE__ );
 		define( 'GSBF_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
