@@ -28,6 +28,8 @@ Items marked **[OPEN]** are not decided (see §14). Items marked **[ASSUMED]** a
 | 16 | On reschedule, name / email / phone are **read-only**; only the slot can change. |
 | 17 | Admin email: Confirm / Decline only ("More options" removed). Customer email: View booking / Reschedule / **Cancel**. |
 | 19 | **Reschedule needs admin approval** (manual mode): the booking goes back to `pending`. In auto mode it stays `confirmed`. |
+| 21 | **Admin recipient + approval mode** (not in the design): `adminTo` defaults to the WordPress `admin_email`, approval defaults to `manual`. Two controls ("Send admin emails to", "Approval: Admin confirms by email / Confirm automatically") are added to the email modal's **Settings** tab in the design's existing style. |
+| 22 | **Screens missing from the design** (reschedule warning, reschedule/view entry states, confirm/decline/cancel landing page, "time just taken" error) are built by me from the design's existing tokens and components. |
 | 20 | **Reschedule releases the old slot immediately** (no hold). If the admin declines the reschedule, or it expires (48 h), the **whole booking is deleted**; the customer is warned about this before rescheduling and told again by email. |
 | 18 | When a pending request expires (48 h) the customer gets a short email stating the booking's current state. |
 
@@ -134,7 +136,7 @@ gembooking-simple-booking-form/
 |---|---|
 | Inserter entry, toolbar (Preview form / Reset / Remove) | `block.json`, `edit.js`, `toolbar.js` |
 | Sidebar Booking · Availability · Form and messages · Style | block attributes + `InspectorControls` |
-| Sidebar "Email notifications" → "Configure email" modal (Settings / Admin email / Customer email tabs) | `blocks/booking-form/email-settings/*` → `email-settings-controller` (site-wide option) |
+| Sidebar "Email notifications" → "Configure email" modal (Settings tab editable: name, address, content type, logo, brand colour, footer; Admin / Customer email tabs are read-only previews; "Send test email") | `blocks/booking-form/email-settings/*` → `email-settings-controller` (site-wide option) |
 | Calendar, slot list, 12h/24h toggle, details form, done screen, step / single layouts | shared `BookingWidget` (editor preview + front end) |
 | Pending vs Confirmed done screen | server `status` |
 | Admin email (Confirm / Decline) | `templates/email/admin.php` |
@@ -251,16 +253,24 @@ compare. Expiry: confirm/decline `requested_at + 48h`; view `end_utc`; reschedul
 
 ## 9. Email
 
-Site-wide option `gsbf_settings` (normal array): `approval manual|auto · adminTo · fromName · fromEmail · type
-html|plain · logo (attachment id) · footerHtml · templates{admin,cust}{subject,banner,heading,link,whenLabel,
-whoLabel,btn1,btn2,agendaTitle,body,more,footer,agenda,phone}`. Placeholders `{event} {date} {time} {name} {email}
-{phone}` (escaped). Only `footerHtml` allows kses (`a strong em u ul ol li br p`). `wp_mail()`, `Reply-To` =
-customer email on admin mails. Test send `POST /email-settings/test`. Admin template: buttons Confirm / Decline
-only (`btn3` removed; you are updating the design accordingly, I will re-read it before implementation). Customer
-template: View booking / Reschedule / Cancel (`btn1..btn3`). Mails not in the design use built-in default texts
-(not editable in v1) and each states the booking's current state in one or two sentences: **declined**,
-**rescheduled** (admin + customer, with the new date/time), **cancelled** (admin + customer), **expired** (customer).
-HTML emails use the same system font stack.
+**Re-checked against the updated design.** The email modal now has three tabs: **Settings** (editable) and
+**Admin email / Customer email** (read-only previews: the old right-hand "Field settings" panel that let you edit
+every label/text/placeholder was removed). So **email texts are fixed built-in defaults in v1**
+(`Classes\MailDefaults`), not stored, not editable, no user-facing placeholders.
+
+Site-wide option `gsbf_settings` (normal array) therefore holds only what the Settings tab edits:
+`fromName · fromEmail · type html|plain · logo (attachment id) · footerHtml` + `adminTo` (default `admin_email`) and `approval
+manual|auto` (default `manual`) with the two Settings-tab controls from decision 21. Brand colour in the modal is **not** stored here:
+it edits the block's `accent` attribute, and each email uses the accent from the signed config of the form that
+was booked (so several forms can have different colours while the other settings stay site-wide).
+Only `footerHtml` allows kses (`a strong em u ul ol li br p`). `wp_mail()`, `Reply-To` = customer email on admin
+mails. "Send test email" → `POST /email-settings/test` (sample data, sent to `adminTo`).
+
+Buttons (from the updated design): **admin email** Confirm / Decline (no third button); **customer email**
+View booking / Reschedule / Cancel (third button shown for the customer email only).
+Mails not in the design use the same built-in defaults and each states the booking's current state in one or two
+sentences: **declined**, **rescheduled** (admin + customer, with the new date/time), **cancelled** (admin +
+customer), **expired** (customer). HTML emails use the same system font stack.
 
 ## 10. REST (`gsbf/v1`)
 
@@ -298,9 +308,7 @@ labels, focus-visible, mobile ≤390 px. Script only enqueued on pages that cont
 from `.distignore`), `dist:wporg` uses `.distignore-wporg` (ships `dev_gsbf` source for review).
 
 ## 14. Open questions
-No product questions are open. One pending action: after your design update (admin "More options" removed,
-customer "Cancel" kept, and the reschedule warning if you want it designed) I will re-read the Claude Design
-project before implementation to catch any other change.
-
-Note on `rescheduled_at`: it is the one column I added on my own (needed for the correct email wording and the
-warning logic). Say if you prefer another way.
+None. Design re-read done (customer-only third button; per-field email editing panel removed). Decisions 21-22
+close the two gaps found (admin recipient / approval mode controls, and the screens missing from the design).
+Next step is implementation, in this order: bootstrap + autoload + constants → database + installer →
+`Config`/`ConfigSigner`/`SlotCalendar` (+ unit tests) → REST + `BookingService` → email → block + widget.
