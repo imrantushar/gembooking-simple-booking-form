@@ -109,23 +109,26 @@ class ActionPage {
 	 *
 	 * @param string     $state   confirm|done|info|error.
 	 * @param string     $action  confirm|decline|cancel.
-	 * @param array|null $booking Booking row, when known.
+	 * @param array|null $row     Booking row, when known.
 	 * @param string     $message Message to show (done/info/error).
 	 * @param int        $status  HTTP status.
 	 */
-	private function render( string $state, string $action, ?array $booking, string $message, int $status ): void {
+	private function render( string $state, string $action, ?array $row, string $message, int $status ): void {
 		status_header( $status );
 
-		$accent = $booking && ! empty( $booking['accent'] ) ? (string) $booking['accent'] : '#141A24';
+		// The template receives the *public* fields as $booking. The parameter above
+		// is deliberately not called $booking: extract() would skip a name that is
+		// already defined and the template would see the raw database row.
+		$accent = $row && ! empty( $row['accent'] ) ? (string) $row['accent'] : '#141A24';
 		$vars   = [
 			'state'     => $state,
 			'action'    => $action,
-			'booking'   => $booking ? BookingService::to_public( $booking ) : null,
+			'booking'   => $row ? BookingService::to_public( $row ) : null,
 			'message'   => $message,
 			'accent'    => Helper::sanitize_accent( $accent ),
 			'font'      => MailTemplate::FONT_STACK,
 			'site_name' => wp_specialchars_decode( (string) get_option( 'blogname', '' ), ENT_QUOTES ),
-			'home_url'  => $booking ? BookingActionUrl::page_url( $booking ) : home_url( '/' ),
+			'home_url'  => $row ? BookingActionUrl::page_url( $row ) : home_url( '/' ),
 		];
 
 		// phpcs:ignore WordPress.PHP.DontExtract.extract_extract -- scoped, explicit template variables.

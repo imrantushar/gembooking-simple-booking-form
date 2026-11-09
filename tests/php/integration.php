@@ -185,6 +185,18 @@ $mails = [];
 $res   = BookingService::cancel( $cid );
 it( 'cancel deletes the row and mails customer + admin', ! is_wp_error( $res ) && null === BookingRepository::find( $cid ) && 2 === count( $mails ) );
 
+echo "Landing page (real HTTP)\n";
+$res = $book( $slots[14]['start'], 'l-' . wp_generate_password( 6, false ) . '@example.test' );
+$lid = (int) $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$table} WHERE ref = %s", $res->get_data()['ref'] ) );
+$url = BookingActionUrl::url( BookingRepository::find( $lid ), 'confirm' );
+$get = wp_remote_get( $url, [ 'timeout' => 20 ] );
+$htm = is_wp_error( $get ) ? '' : wp_remote_retrieve_body( $get );
+it( 'confirm page shows the real event, date and time', false !== strpos( $htm, 'Test call' ) && false !== strpos( $htm, wp_date( 'g:i A', $slots[14]['start'], new DateTimeZone( 'Asia/Dhaka' ) ) ), is_wp_error( $get ) ? $get->get_error_message() : '' );
+$post = wp_remote_post( $url, [ 'timeout' => 20, 'body' => [ 'gsbf_do' => '1' ] ] );
+it( 'confirm POST confirms the booking', 'confirmed' === ( BookingRepository::find( $lid )['status'] ?? '' ) );
+$gone = wp_remote_retrieve_body( wp_remote_get( $url, [ 'timeout' => 20 ] ) );
+it( 'a second visit says it was already handled', false !== strpos( $gone, 'already handled' ) );
+
 echo "Expiry cron (pending older than 48 h)\n";
 $res = $book( $slot_c, 'i-' . wp_generate_password( 6, false ) . '@example.test' );
 $eid = (int) $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$table} WHERE ref = %s", $res->get_data()['ref'] ) );
