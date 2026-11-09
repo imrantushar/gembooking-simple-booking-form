@@ -18,7 +18,7 @@ GemBooking Simple Booking Form adds one block, **GemBooking Form**, to the block
 * You set the event, duration, weekdays, hours, notice, buffer and timezone right in the block sidebar.
 * Choose **Admin confirms by email** (the booking waits as Pending until you click Confirm or Decline in the email, no login needed) or **Confirm automatically**.
 * A time slot can never be booked twice. A declined, cancelled or unanswered request (48 hours) frees its slot again.
-* Customers get a confirmation email with links to view, reschedule or cancel their booking.
+* Customers get an email right away saying their request is pending (when you confirm by email), then a confirmation email, each with links to view, reschedule or cancel their booking.
 * Works with any theme. Uses WordPress's default font and the accent color you pick.
 
 It does not need any other plugin.

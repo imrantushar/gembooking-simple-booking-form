@@ -56,7 +56,7 @@ export default function SettingsTab( { settings, update, accent, setAccent } ) {
 				help={
 					settings.approval === 'manual'
 						? __(
-								'Each booking is saved as Pending. The customer is emailed only after you click Confirm in the admin email.',
+								'Each booking is saved as Pending. The customer is told it is pending right away, and gets the confirmation after you click Confirm in the admin email.',
 								'gembooking-simple-booking-form'
 							)
 						: __(

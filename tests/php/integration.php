@@ -117,7 +117,8 @@ it( 'status is pending in manual mode', 'pending' === ( $booking_a['status'] ?? 
 it( 'a ref is returned, the id is not', ! empty( $booking_a['ref'] ) && ! isset( $booking_a['id'] ) );
 it( 'admin got the request email with Confirm/Decline', in_array( true, array_map( fn( $m ) => false !== strpos( $m['message'], 'gsbf_action=confirm' ) && false !== strpos( $m['message'], 'gsbf_action=decline' ), $mails ), true ) );
 it( 'admin mail goes to the configured address', 'admin@example.test' === ( $mails[0]['to'] ?? '' ) );
-it( 'customer gets nothing until approval', 1 === count( $mails ) );
+it( 'customer gets a "received, still pending" email', 2 === count( $mails ) && false !== strpos( $mails[1]['subject'], 'We received your booking request' ) && false !== strpos( $mails[1]['message'], 'pending' ) );
+it( 'that email has View / Reschedule / Cancel but no confirm link', false !== strpos( $mails[1]['message'], 'gsbf_action=view' ) && false !== strpos( $mails[1]['message'], 'gsbf_action=cancel' ) && false === strpos( $mails[1]['message'], 'gsbf_action=confirm' ) );
 $row_a = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$table} WHERE ref = %s", $booking_a['ref'] ), ARRAY_A );
 it( 'row stored with UTC times and accent', $row_a && '#006BFF' === $row_a['accent'] && 'Asia/Dhaka' === $row_a['timezone'] );
 

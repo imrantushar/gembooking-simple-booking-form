@@ -68,6 +68,8 @@ class BookingService {
 			Mailer::send( 'admin_new_confirmed', $booking );
 		} else {
 			Mailer::send( 'admin_request', $booking );
+			// Tell the customer their request arrived and is still pending.
+			Mailer::send( 'customer_received', $booking );
 		}
 
 		return $booking;

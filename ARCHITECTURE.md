@@ -26,6 +26,7 @@ Items marked **[OPEN]** are not decided (see §14). Items marked **[ASSUMED]** a
 | 14 | Once a slot's time is over it is free again (never bookable in the past; next occurrence is a new free slot). **Rows are kept, never auto-deleted** for this. |
 | 15 | Reschedule/View/Cancel URLs carry only `booking id + signed token`; everything else is read from the DB. |
 | 16 | On reschedule, name / email / phone are **read-only**; only the slot can change. |
+| 23 | In manual mode the customer is emailed **at once** that the request was received and is **pending** ("We received your booking request"); the confirmation mail still follows when the admin confirms. |
 | 17 | Admin email: Confirm / Decline only ("More options" removed). Customer email: View booking / Reschedule / **Cancel**. |
 | 19 | **Reschedule needs admin approval** (manual mode): the booking goes back to `pending`. In auto mode it stays `confirmed`. |
 | 21 | **Admin recipient + approval mode** (not in the design): `adminTo` defaults to the WordPress `admin_email`, approval defaults to `manual`. Two controls ("Send admin emails to", "Approval: Admin confirms by email / Confirm automatically") are added to the email modal's **Settings** tab in the design's existing style. |
@@ -203,7 +204,9 @@ form timezone; slots from `startHour`, step `duration+buffer`, `slot+duration �
 
 **Create** — `POST /bookings {config,sig,start,name,email,phone?,hp,t}` → verify sig → sanitize → `SpamGuard`
 (honeypot, min fill time, rate limit) → `start` must be a free real slot → INSERT (409 on duplicate) →
-`manual`: status `pending`, email **admin** (details + Confirm/Decline) · `auto`: status `confirmed`, email
+`manual`: status `pending`, email **admin** (details + Confirm/Decline) and email the **customer** a "We received
+your booking request" mail that says the booking is still pending (with View / Reschedule / Cancel; the host's
+confirmation follows in a second mail) · `auto`: status `confirmed`, email
 **customer** (confirmation with View/Reschedule) + FYI to **admin** → `201 {ref,status,start,end}`.
 
 **Confirm / Decline (admin, manual mode)** — email link `{page}?gsbf_action=confirm|decline&gsbf_booking=<id>&gsbf_token=<t>`

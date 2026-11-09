@@ -24,6 +24,7 @@ class MailDefaults {
 		'admin_reschedule_request'     => 'admin',
 		'admin_rescheduled'            => 'admin',
 		'admin_cancelled'              => 'admin',
+		'customer_received'            => 'customer',
 		'customer_confirmed'           => 'customer',
 		'customer_rescheduled'         => 'customer',
 		'customer_reschedule_received' => 'customer',
@@ -96,6 +97,12 @@ class MailDefaults {
 				$text['tone']    = 'danger';
 				$text['heading'] = __( '{event} with {name}', 'gembooking-simple-booking-form' );
 				$text['body']    = __( '{name} cancelled this booking. The time is available again.', 'gembooking-simple-booking-form' );
+				break;
+			case 'customer_received':
+				$text['subject'] = __( 'We received your booking request: {event}', 'gembooking-simple-booking-form' );
+				$text['banner']  = __( 'Your booking is pending. It is not confirmed yet.', 'gembooking-simple-booking-form' );
+				$text['tone']    = 'warning';
+				$text['body']    = __( 'Hi {name}, thanks for your request. The time below is held for you, but your booking is pending until the host confirms it. We will email you again as soon as they do. If it is not confirmed within 48 hours, the time is released.', 'gembooking-simple-booking-form' );
 				break;
 			case 'customer_confirmed':
 				$text['subject'] = __( 'Your booking is confirmed: {event}', 'gembooking-simple-booking-form' );
@@ -181,6 +188,7 @@ class MailDefaults {
 					[ __( 'Decline', 'gembooking-simple-booking-form' ), $link( 'decline' ), 'secondary' ],
 				];
 				break;
+			case 'customer_received':
 			case 'customer_confirmed':
 			case 'customer_rescheduled':
 			case 'customer_reschedule_received':
