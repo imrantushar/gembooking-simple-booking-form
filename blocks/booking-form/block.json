@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "gsbf/booking-form",
+  "title": "GemBooking Form",
+  "category": "gembooking",
+  "icon": "calendar-alt",
+  "description": "Let visitors book a time slot. You confirm by email.",
+  "keywords": [ "booking", "appointment", "schedule", "calendar", "gembooking" ],
+  "textdomain": "gembooking-simple-booking-form",
+  "attributes": {
+    "formId": { "type": "string", "default": "" },
+    "title": { "type": "string", "default": "30-minute consultation" },
+    "description": { "type": "string", "default": "A short call to talk through your project and next steps." },
+    "layout": { "type": "string", "default": "step" },
+    "duration": { "type": "number", "default": 30 },
+    "days": { "type": "array", "items": { "type": "number" }, "default": [ 1, 2, 3, 4, 5 ] },
+    "startHour": { "type": "number", "default": 9 },
+    "endHour": { "type": "number", "default": 17 },
+    "notice": { "type": "number", "default": 1 },
+    "buffer": { "type": "number", "default": 0 },
+    "maxAdvance": { "type": "number", "default": 60 },
+    "timezone": { "type": "string", "default": "" },
+    "accent": { "type": "string", "default": "#141A24" },
+    "phoneRequired": { "type": "boolean", "default": false },
+    "message": { "type": "string", "default": "A confirmation email is on its way. We look forward to speaking with you." }
+  },
+  "supports": {
+    "html": false,
+    "align": [ "wide", "full" ]
+  },
+  "editorScript": "gsbf-blocks",
+  "editorStyle": "gsbf-blocks",
+  "viewScript": "gsbf-frontend",
+  "style": "gsbf-frontend"
+}

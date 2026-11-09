@@ -1,0 +1,545 @@
+// GemBooking Simple Booking Form - widget styles (editor preview + front end).
+// Values come from the Claude Design project. Font: WordPress default system stack.
+
+.gsbf-form {
+	--gsbf-accent: #141a24;
+	--gsbf-text: #141a24;
+	--gsbf-text-2: #434a51;
+	--gsbf-muted: #646c73;
+	--gsbf-border: #e0e4e8;
+	--gsbf-surface: #f6f7f8;
+	--gsbf-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+
+	font-family: var(--gsbf-font);
+	font-size: 14px;
+	line-height: 1.5;
+	color: var(--gsbf-text);
+	text-align: left;
+
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+
+	button,
+	input {
+		font-family: inherit;
+		letter-spacing: normal;
+		text-transform: none;
+		margin: 0;
+	}
+
+	button {
+		appearance: none;
+		cursor: pointer;
+		line-height: 1.2;
+	}
+
+	button:disabled {
+		cursor: not-allowed;
+	}
+
+	button:focus-visible,
+	input:focus-visible {
+		outline: 2px solid var(--gsbf-text);
+		outline-offset: 1px;
+	}
+}
+
+.gsbf-frame {
+	width: 100%;
+	background: #fff;
+	border: 1px solid var(--gsbf-border);
+	border-radius: 12px;
+	box-shadow: 0 0 1px rgba(20, 26, 36, 0.2), 0 1px 2px rgba(20, 26, 36, 0.1);
+	overflow: hidden;
+}
+
+.gsbf-status {
+	padding: 40px 24px;
+	text-align: center;
+	color: var(--gsbf-muted);
+}
+
+/* ---- pick step ---------------------------------------------------------- */
+
+.gsbf-pick {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 24px;
+	padding: 20px 24px 24px;
+}
+
+.gsbf-cal {
+	flex: 1 1 280px;
+	min-width: 0;
+}
+
+.gsbf-slots {
+	flex: 1 1 200px;
+	min-width: 0;
+}
+
+.gsbf-cal-head,
+.gsbf-slots-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	margin-bottom: 10px;
+}
+
+.gsbf-cal-title {
+	font-size: 15px;
+	font-weight: 500;
+	min-width: 0;
+}
+
+.gsbf-cal-nav {
+	display: flex;
+	gap: 4px;
+}
+
+.gsbf-nav {
+	width: 36px;
+	height: 36px;
+	border: 1px solid var(--gsbf-border);
+	background: #fff;
+	color: var(--gsbf-text);
+	border-radius: 6px;
+	font-size: 18px;
+	padding: 0;
+
+	&:disabled {
+		opacity: 0.4;
+	}
+}
+
+.gsbf-weekdays,
+.gsbf-days {
+	display: grid;
+	grid-template-columns: repeat(7, minmax(0, 1fr));
+	gap: 4px;
+}
+
+.gsbf-weekdays {
+	text-align: center;
+	font-size: 11px;
+	color: var(--gsbf-muted);
+	margin-bottom: 4px;
+}
+
+.gsbf-days.is-loading {
+	opacity: 0.5;
+}
+
+.gsbf-day {
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid #eef0f2;
+	border-radius: 6px;
+	background: var(--gsbf-surface);
+	color: var(--gsbf-text);
+	font-size: 14px;
+	font-weight: 500;
+	padding: 0;
+
+	&.is-selected {
+		border-color: transparent;
+		background: var(--gsbf-accent);
+		color: #fff;
+	}
+
+	&.is-off {
+		border-color: transparent;
+		background: transparent;
+		color: #8e949a;
+		font-weight: 400;
+	}
+}
+
+.gsbf-note {
+	font-size: 11px;
+	color: var(--gsbf-muted);
+	margin-top: 10px;
+}
+
+.gsbf-seg {
+	display: flex;
+	gap: 2px;
+	background: var(--gsbf-surface);
+	padding: 2px;
+	border-radius: 8px;
+	flex-shrink: 0;
+
+	button {
+		height: 32px;
+		min-width: 44px;
+		padding: 0 8px;
+		border: 0;
+		border-radius: 6px;
+		background: transparent;
+		color: var(--gsbf-muted);
+		font-size: 12px;
+
+		&.is-on {
+			background: #fff;
+			color: var(--gsbf-text);
+			font-weight: 600;
+			box-shadow: 0 0 1px rgba(20, 26, 36, 0.2), 0 1px 2px rgba(20, 26, 36, 0.1);
+		}
+	}
+}
+
+.gsbf-slot-list {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	max-height: 340px;
+	overflow: auto;
+	padding: 2px;
+}
+
+.gsbf-slot {
+	position: relative;
+	flex-shrink: 0;
+	width: 100%;
+	height: 44px;
+	padding: 0 14px;
+	border: 1px solid var(--gsbf-border);
+	border-radius: 8px;
+	background: #fff;
+	color: var(--gsbf-text);
+	font-size: 14px;
+	font-weight: 500;
+	text-align: center;
+	user-select: none;
+
+	&.is-selected {
+		border-color: var(--gsbf-accent);
+		background: var(--gsbf-accent);
+		color: #fff;
+	}
+
+	&:disabled {
+		background: var(--gsbf-surface);
+		color: #8e949a;
+	}
+}
+
+.gsbf-slot-badge {
+	margin-left: 8px;
+	padding: 2px 6px;
+	border-radius: 999px;
+	background: rgba(127, 127, 127, 0.18);
+	font-size: 11px;
+	font-weight: 500;
+}
+
+.gsbf-empty {
+	border: 1px dashed var(--gsbf-border);
+	border-radius: 8px;
+	padding: 24px 16px;
+	text-align: center;
+	font-size: 12px;
+	color: var(--gsbf-muted);
+}
+
+.gsbf-foot {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 14px 24px;
+	border-top: 1px solid var(--gsbf-surface);
+}
+
+.gsbf-foot-text {
+	font-size: 13px;
+	color: var(--gsbf-text-2);
+	min-width: 0;
+}
+
+.gsbf-foot-actions {
+	display: flex;
+	gap: 8px;
+}
+
+/* ---- buttons ------------------------------------------------------------ */
+
+.gsbf-btn-primary,
+.gsbf-btn-secondary {
+	height: 44px;
+	padding: 0 20px;
+	border-radius: 6px;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.gsbf-btn-primary {
+	border: 0;
+	background: var(--gsbf-accent);
+	color: #fff;
+
+	&:disabled {
+		background: #b5babf;
+	}
+}
+
+.gsbf-btn-secondary {
+	border: 1px solid var(--gsbf-border);
+	background: #fff;
+	color: var(--gsbf-text);
+
+	&.is-block {
+		display: block;
+		width: 100%;
+		height: 46px;
+		margin-top: 16px;
+	}
+}
+
+.gsbf-linkbtn {
+	min-height: 32px;
+	border: 0;
+	background: none;
+	color: var(--gsbf-text);
+	text-decoration: underline;
+	font-size: 13px;
+	font-weight: 500;
+}
+
+/* ---- details step ------------------------------------------------------- */
+
+.gsbf-details {
+	padding: 20px 24px 24px;
+}
+
+.gsbf-summary {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 16px;
+	padding: 10px 12px;
+	border-radius: 8px;
+	background: var(--gsbf-surface);
+}
+
+.gsbf-summary-text {
+	flex: 1;
+	font-size: 13px;
+	font-weight: 500;
+}
+
+.gsbf-label {
+	display: block;
+	margin-bottom: 6px;
+	font-size: 13px;
+	font-weight: 500;
+	color: #344054;
+}
+
+.gsbf-optional {
+	color: var(--gsbf-muted);
+	font-weight: 400;
+}
+
+.gsbf-gap {
+	height: 14px;
+}
+
+.gsbf-input {
+	display: block;
+	width: 100%;
+	height: 46px;
+	padding: 0 12px;
+	border: 1px solid #d0d5dd;
+	border-radius: 4px;
+	background: #fff;
+	color: var(--gsbf-text);
+	font-size: 14px;
+	box-shadow: none;
+
+	&.has-error {
+		border-color: #fca5a5;
+	}
+
+	&[readonly] {
+		background: var(--gsbf-surface);
+		color: var(--gsbf-text-2);
+	}
+}
+
+.gsbf-error {
+	margin-top: 4px;
+	font-size: 11px;
+	color: #991b1b;
+}
+
+.gsbf-alert {
+	margin-top: 14px;
+	padding: 10px 12px;
+	border-radius: 8px;
+	background: #fee2e2;
+	color: #991b1b;
+	font-size: 13px;
+
+	&.is-flush {
+		margin: 16px 24px 0;
+	}
+}
+
+.gsbf-banner {
+	margin: 16px 24px 0;
+	padding: 10px 12px;
+	border-radius: 8px;
+	background: var(--gsbf-surface);
+	font-size: 13px;
+	font-weight: 500;
+}
+
+.gsbf-warning {
+	margin-top: 16px;
+	padding: 12px;
+	border: 1px solid #fcd34d;
+	border-radius: 8px;
+	background: #fef3c7;
+	color: #92400e;
+	font-size: 13px;
+}
+
+.gsbf-check {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 10px;
+	font-weight: 600;
+	cursor: pointer;
+
+	input {
+		width: 18px;
+		height: 18px;
+	}
+}
+
+.gsbf-actions {
+	display: flex;
+	gap: 10px;
+	margin-top: 20px;
+
+	.gsbf-btn-secondary,
+	.gsbf-btn-primary {
+		height: 46px;
+	}
+
+	.gsbf-btn-primary {
+		flex: 1;
+	}
+}
+
+// Honeypot: invisible to people, tempting to bots.
+.gsbf-hp {
+	position: absolute;
+	left: -9999px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+/* ---- done step ---------------------------------------------------------- */
+
+.gsbf-done {
+	padding: 28px 24px;
+	text-align: center;
+}
+
+.gsbf-done-icon {
+	width: 56px;
+	height: 56px;
+	margin: 0 auto 14px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 999px;
+
+	&.is-pending {
+		background: #fef3c7;
+		color: #92400e;
+	}
+
+	&.is-ok {
+		background: #dcfce7;
+		color: #166534;
+	}
+}
+
+.gsbf-done-title {
+	margin-top: 10px;
+	font-size: 22px;
+	font-weight: 600;
+}
+
+.gsbf-done-text {
+	max-width: 400px;
+	margin: 8px auto 0;
+	font-size: 14px;
+	line-height: 21px;
+	color: var(--gsbf-text-2);
+}
+
+.gsbf-rows {
+	margin-top: 16px;
+	text-align: left;
+	border: 1px solid var(--gsbf-border);
+	border-radius: 8px;
+}
+
+.gsbf-row {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 12px 14px;
+	border-bottom: 1px solid var(--gsbf-surface);
+	font-size: 13px;
+
+	&:last-child {
+		border-bottom: 0;
+	}
+
+	span:first-child {
+		color: var(--gsbf-muted);
+	}
+
+	span:last-child {
+		font-weight: 500;
+		text-align: right;
+		overflow-wrap: anywhere;
+
+		&.is-mono {
+			font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+		}
+	}
+}
+
+@media (max-width: 480px) {
+	.gsbf-pick,
+	.gsbf-details,
+	.gsbf-done {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	.gsbf-foot {
+		padding: 12px 16px;
+		flex-wrap: wrap;
+	}
+
+	.gsbf-alert.is-flush,
+	.gsbf-banner {
+		margin-left: 16px;
+		margin-right: 16px;
+	}
+}

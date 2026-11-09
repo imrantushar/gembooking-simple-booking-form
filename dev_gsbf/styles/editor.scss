@@ -1,0 +1,193 @@
+// Block editor only: sidebar controls, email modal, preview modal.
+
+.gsbf-field {
+	margin-bottom: 16px;
+}
+
+.gsbf-field-label {
+	display: block;
+	margin-bottom: 8px;
+	font-size: 11px;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
+.gsbf-help {
+	margin: 0 0 12px;
+	font-size: 12px;
+	color: #646c73;
+}
+
+.gsbf-chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.gsbf-two {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px;
+	margin-bottom: 16px;
+}
+
+.gsbf-swatches {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-bottom: 12px;
+}
+
+.gsbf-swatch {
+	position: relative;
+	width: 32px;
+	height: 32px;
+	padding: 0;
+	border: 2px solid #fff;
+	border-radius: 999px;
+	cursor: pointer;
+
+	&.is-custom {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+		background: #f6f7f8;
+		box-shadow: 0 0 0 1px #e0e4e8;
+
+		input {
+			position: absolute;
+			inset: 0;
+			opacity: 0;
+			cursor: pointer;
+		}
+	}
+}
+
+.gsbf-email-modal {
+	width: min(760px, 96vw);
+
+	.components-modal__content {
+		overflow-x: hidden;
+	}
+
+	.components-modal__content {
+		padding-bottom: 0;
+	}
+
+	h3 {
+		margin: 20px 0 12px;
+		font-size: 13px;
+		font-weight: 600;
+		text-transform: uppercase;
+		color: #434a51;
+	}
+
+	.components-base-control {
+		margin-bottom: 16px;
+	}
+}
+
+.gsbf-settings {
+	padding-top: 4px;
+}
+
+.gsbf-logo {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.gsbf-logo-box {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	overflow: hidden;
+	border: 1px dashed #d0d5dd;
+	border-radius: 4px;
+	background: #f9fafb;
+	font-size: 10px;
+	color: #646c73;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+}
+
+.gsbf-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.gsbf-footer-editor {
+	border: 1px solid #d0d5dd;
+	border-radius: 4px;
+}
+
+.gsbf-footer-tools {
+	display: flex;
+	gap: 2px;
+	padding: 4px;
+	border-bottom: 1px solid #e0e4e8;
+	background: #f6f7f8;
+}
+
+.gsbf-footer-area {
+	min-height: 72px;
+	padding: 8px 10px;
+	font-size: 13px;
+
+	&:focus {
+		outline: 2px solid #141a24;
+		outline-offset: -2px;
+	}
+}
+
+.gsbf-mail-frame {
+	width: 100%;
+	height: 560px;
+	border: 1px solid #e0e4e8;
+	border-radius: 8px;
+	background: #f6f7f8;
+}
+
+.gsbf-modal-actions {
+	position: sticky;
+	bottom: 0;
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-top: 16px;
+	padding: 12px 0;
+	border-top: 1px solid #e0e4e8;
+	background: #fff;
+}
+
+.gsbf-preview-bar {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 16px;
+}
+
+.gsbf-preview-note {
+	margin-left: 8px;
+	font-size: 12px;
+	color: #646c73;
+}
+
+.gsbf-preview-stage {
+	display: flex;
+	justify-content: center;
+	padding: 24px 16px;
+	background: #f6f7f8;
+
+	.gsbf-form {
+		margin: 0 auto;
+	}
+}

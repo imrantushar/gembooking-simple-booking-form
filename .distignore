@@ -1,0 +1,58 @@
+# Production release build (npm run dist).
+#
+# Ships ONLY what the plugin needs at runtime: PHP, compiled assets under
+# assets/build, templates and languages. Everything used to *produce* those
+# files is stripped.
+#
+# The WordPress.org submission build is different: it must ship the JS/Sass
+# source so the compiled assets are reviewable. That variant lives in
+# .distignore-wporg and is built with `npm run dist:wporg`.
+
+# VCS / editor / OS / AI tooling
+.git
+.gitignore
+.gitattributes
+.github
+.vscode
+.idea
+.claude
+.agents
+.cursor
+.DS_Store
+Thumbs.db
+
+# Release tooling (runs during packaging, never loaded by WordPress)
+build-tools
+build.config.json
+.build-cache
+
+# This file itself
+.distignore
+.distignore-wporg
+
+# JS toolchain and source
+node_modules
+dev_gsbf
+package.json
+package-lock.json
+webpack.config.js
+jsconfig.json
+.prettierrc.js
+.prettierignore
+.eslintrc*
+eslint.config.cjs
+
+# PHP dev tooling
+composer.json
+composer.lock
+phpcs.xml
+phpunit.xml*
+vendor
+
+# Tests and docs
+tests
+docs
+ARCHITECTURE.md
+
+# Compiled-asset by-products
+**/*.map

@@ -1,0 +1,1023 @@
+# Copyright (C) 2026 Kodezen
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: GemBooking Simple Booking Form 0.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/gembooking-simple-booking-form\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-11-09T11:46:38+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: gembooking-simple-booking-form\n"
+
+#. Plugin Name of the plugin
+#: gembooking-simple-booking-form.php
+msgid "GemBooking Simple Booking Form"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: gembooking-simple-booking-form.php
+msgid "https://gembooking.net"
+msgstr ""
+
+#. Description of the plugin
+#: gembooking-simple-booking-form.php
+msgid "A simple appointment booking form block. Visitors pick a date and time, you confirm by email. No setup screens, double-booking protected."
+msgstr ""
+
+#. Author of the plugin
+#: gembooking-simple-booking-form.php
+msgid "Kodezen"
+msgstr ""
+
+#. Author URI of the plugin
+#: gembooking-simple-booking-form.php
+msgid "https://kodezen.com"
+msgstr ""
+
+#. translators: 1: minimum required PHP version, 2: current PHP version
+#: gembooking-simple-booking-form.php:38
+#, php-format
+msgid "GemBooking Simple Booking Form requires PHP version %1$s or higher. Your site is currently running PHP %2$s. Please ask your hosting provider to update PHP."
+msgstr ""
+
+#: includes/api/availability-controller.php:77
+msgid "Provide a month or a date."
+msgstr ""
+
+#: includes/api/booking-controller.php:168
+#: includes/classes/booking-service.php:131
+#: includes/classes/booking-service.php:153
+msgid "This booking no longer exists."
+msgstr ""
+
+#: includes/api/booking-controller.php:206
+#: includes/frontend/action-page.php:57
+msgid "This link is invalid or has expired."
+msgstr ""
+
+#: includes/api/email-settings-controller.php:123
+msgid "The test email could not be sent. Check the admin email address and your site email setup."
+msgstr ""
+
+#: includes/blocks.php:44
+msgid "GemBooking"
+msgstr ""
+
+#: includes/classes/booking-repository.php:84
+#: includes/classes/booking-repository.php:114
+msgid "Could not save the booking. Please try again."
+msgstr ""
+
+#: includes/classes/booking-repository.php:100
+msgid "Booking not found."
+msgstr ""
+
+#: includes/classes/booking-repository.php:237
+msgid "Erased"
+msgstr ""
+
+#: includes/classes/booking-repository.php:249
+#: includes/classes/booking-service.php:275
+msgid "Sorry, that time was just taken. Please choose another time."
+msgstr ""
+
+#: includes/classes/booking-service.php:158
+msgid "This booking belongs to a different form."
+msgstr ""
+
+#: includes/classes/booking-service.php:161
+msgid "This booking has already started and can no longer be changed."
+msgstr ""
+
+#: includes/classes/booking-service.php:260
+msgid "This booking form is not set up correctly."
+msgstr ""
+
+#: includes/classes/booking-service.php:265
+msgid "That time is not available. Please choose another time."
+msgstr ""
+
+#: includes/classes/booking-service.php:292
+#: dev_gsbf/components/BookingWidget.js:196
+msgid "Enter your name."
+msgstr ""
+
+#: includes/classes/booking-service.php:295
+#: dev_gsbf/components/BookingWidget.js:202
+msgid "Enter a valid email address."
+msgstr ""
+
+#: includes/classes/booking-service.php:298
+#: dev_gsbf/components/BookingWidget.js:208
+msgid "Enter your phone number."
+msgstr ""
+
+#: includes/classes/booking-service.php:311
+msgid "This request was already handled, cancelled or has expired."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:66
+msgid "New booking request: {event} @ {short}"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:67
+msgid "You have a new booking request."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:69
+#: includes/classes/mail-defaults.php:76
+#: includes/classes/mail-defaults.php:83
+#: includes/classes/mail-defaults.php:90
+#: includes/classes/mail-defaults.php:97
+msgid "{event} with {name}"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:70
+msgid "{name} wants to book a time with you. Confirm or decline from this email. No WordPress login needed."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:73
+msgid "New booking: {event} @ {short}"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:74
+msgid "A new booking was confirmed automatically."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:77
+msgid "{name} booked a time with you. It is already confirmed, nothing else to do."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:80
+msgid "Reschedule request: {event} @ {short}"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:81
+msgid "A customer asked to move their booking."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:84
+msgid "{name} asked to move this booking to the time below. Their previous time is already released. Confirm the new time, or decline to cancel the booking."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:87
+msgid "Booking rescheduled: {event} @ {short}"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:88
+msgid "A booking was rescheduled."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:91
+msgid "{name} moved their booking to a new time. It stays confirmed."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:94
+msgid "Booking cancelled: {event} @ {short}"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:95
+msgid "A booking was cancelled."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:98
+msgid "{name} cancelled this booking. The time is available again."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:101
+msgid "Your booking is confirmed: {event}"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:102
+msgid "Your booking is confirmed."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:104
+msgid "Hi {name}, your booking is confirmed. We look forward to speaking with you. Reply to this email if you need to change anything."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:107
+msgid "Your booking has a new time: {event}"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:108
+msgid "Your booking was moved to the new time."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:110
+msgid "Hi {name}, your booking is now at the time below and it is confirmed."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:113
+msgid "Reschedule request received: {event}"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:114
+msgid "Waiting for the host to approve the new time."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:116
+msgid "Hi {name}, we received your request to move your booking. Your previous time has been released. If the host does not approve the new time within 48 hours, your booking will be cancelled."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:119
+msgid "Your booking request was declined: {event}"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:120
+msgid "Your booking request was declined."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:122
+msgid "Hi {name}, the host could not accept this time. The time slot is free again and you are welcome to choose another time."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:125
+msgid "Your reschedule request was not approved: {event}"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:126
+msgid "Your reschedule request was not approved."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:128
+msgid "Hi {name}, the host did not approve the new time, so your booking has been cancelled and both times are released. You can book again at any time."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:131
+msgid "Your booking was cancelled: {event}"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:132
+msgid "Your booking was cancelled."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:134
+msgid "Hi {name}, your booking has been cancelled and the time is available again."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:137
+msgid "Your booking request was not confirmed in time: {event}"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:138
+msgid "Your booking request was not confirmed in time."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:140
+msgid "Hi {name}, the host did not confirm this request within 48 hours, so the time slot was released. You can choose another time."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:143
+msgid "Your reschedule request was not approved in time: {event}"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:144
+msgid "Your reschedule request was not approved in time."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:146
+msgid "Hi {name}, the host did not approve the new time within 48 hours, so your booking has been cancelled and both times are released. You can book again at any time."
+msgstr ""
+
+#: includes/classes/mail-defaults.php:158
+msgid "When"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:161
+msgid "Previous"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:165
+msgid "Who"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:167
+msgid "Ref"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:180
+#: templates/action-page.php:24
+#: dev_gsbf/components/BookingWidget.js:390
+msgid "Confirm booking"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:181
+msgid "Decline"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:188
+msgid "View booking"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:189
+msgid "Reschedule"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:190
+msgid "Cancel"
+msgstr ""
+
+#: includes/classes/mail-defaults.php:199
+msgid "Book again"
+msgstr ""
+
+#. translators: %s: email subject
+#: includes/classes/mailer.php:79
+#, php-format
+msgid "[Test] %s"
+msgstr ""
+
+#: includes/classes/mailer.php:92
+msgid "30-minute consultation"
+msgstr ""
+
+#: includes/classes/request-config.php:31
+msgid "This form is out of date. Please reload the page and try again."
+msgstr ""
+
+#: includes/classes/spam-guard.php:40
+msgid "Could not send the request. Please try again."
+msgstr ""
+
+#: includes/classes/spam-guard.php:44
+msgid "That was very quick. Please check your details and try again."
+msgstr ""
+
+#: includes/classes/spam-guard.php:79
+msgid "Too many requests. Please try again later."
+msgstr ""
+
+#: includes/frontend/action-page.php:64
+msgid "This booking no longer exists. It may already be cancelled."
+msgstr ""
+
+#: includes/frontend/action-page.php:65
+msgid "This request was already handled, cancelled or has expired. Nothing more to do."
+msgstr ""
+
+#: includes/frontend/action-page.php:99
+msgid "Booking confirmed. The customer has been emailed."
+msgstr ""
+
+#: includes/frontend/action-page.php:101
+msgid "Booking declined. The customer has been emailed and the time is free again."
+msgstr ""
+
+#: includes/frontend/action-page.php:103
+msgid "Your booking has been cancelled. We emailed you a confirmation."
+msgstr ""
+
+#. translators: 1: link to the site, 2: site host
+#: includes/helper.php:36
+#, php-format
+msgid "Thank you for using GemBooking. <a href=\"%1$s\">%2$s</a>"
+msgstr ""
+
+#: includes/privacy.php:23
+#: includes/privacy.php:32
+msgid "GemBooking Simple Booking Form bookings"
+msgstr ""
+
+#: includes/privacy/eraser.php:28
+msgid "Booking names, emails and phone numbers were anonymised. The booked time slots were kept so that later bookings cannot double up."
+msgstr ""
+
+#: includes/privacy/exporter.php:30
+#: templates/action-page.php:45
+msgid "Booking ref"
+msgstr ""
+
+#: includes/privacy/exporter.php:34
+#: templates/action-page.php:39
+#: dev_gsbf/components/BookingWidget.js:575
+msgid "Event"
+msgstr ""
+
+#: includes/privacy/exporter.php:38
+msgid "Start"
+msgstr ""
+
+#: includes/privacy/exporter.php:42
+msgid "Status"
+msgstr ""
+
+#: includes/privacy/exporter.php:46
+#: templates/action-page.php:43
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:17
+#: dev_gsbf/components/BookingWidget.js:591
+#: dev_gsbf/components/DetailsStep.js:62
+msgid "Name"
+msgstr ""
+
+#: includes/privacy/exporter.php:50
+#: templates/action-page.php:44
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:14
+#: dev_gsbf/components/BookingWidget.js:595
+#: dev_gsbf/components/DetailsStep.js:70
+msgid "Email"
+msgstr ""
+
+#: includes/privacy/exporter.php:56
+#: dev_gsbf/components/DetailsStep.js:79
+msgid "Phone"
+msgstr ""
+
+#: includes/privacy/exporter.php:63
+msgid "Bookings"
+msgstr ""
+
+#: templates/action-page.php:19
+msgid "Confirm this booking?"
+msgstr ""
+
+#: templates/action-page.php:20
+msgid "Decline this booking request?"
+msgstr ""
+
+#: templates/action-page.php:21
+msgid "Cancel your booking?"
+msgstr ""
+
+#: templates/action-page.php:25
+msgid "Decline booking"
+msgstr ""
+
+#: templates/action-page.php:26
+msgid "Yes, cancel my booking"
+msgstr ""
+
+#: templates/action-page.php:29
+msgid "The customer will be emailed that their booking is confirmed."
+msgstr ""
+
+#: templates/action-page.php:30
+msgid "The customer will be emailed and the time becomes free for others."
+msgstr ""
+
+#: templates/action-page.php:31
+msgid "The time becomes free for others. This cannot be undone."
+msgstr ""
+
+#: templates/action-page.php:34
+#: dev_gsbf/blocks/booking-form/email-settings/EmailModal.js:156
+msgid "Done"
+msgstr ""
+
+#: templates/action-page.php:40
+#: dev_gsbf/components/BookingWidget.js:579
+msgid "Date"
+msgstr ""
+
+#: templates/action-page.php:41
+#: dev_gsbf/components/BookingWidget.js:583
+msgid "Time"
+msgstr ""
+
+#: templates/action-page.php:42
+#: dev_gsbf/blocks/booking-form/inspector/AvailabilityPanel.js:155
+#: dev_gsbf/components/BookingWidget.js:587
+msgid "Timezone"
+msgstr ""
+
+#: templates/action-page.php:95
+#: dev_gsbf/components/DoneStep.js:62
+msgid "Book another time"
+msgstr ""
+
+#. translators: %s: recipient email address
+#: templates/email/layout.php:51
+#, php-format
+msgid "to %s"
+msgstr ""
+
+#: templates/form.php:17
+msgid "Please enable JavaScript to book a time."
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/edit.js:28
+#: dev_gsbf/blocks/booking-form/edit.js:128
+msgid "Preview form"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/edit.js:38
+msgid "Desktop"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/edit.js:44
+msgid "Mobile"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/edit.js:47
+msgid "Settings update the form live. Bookings made here are not saved."
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/edit.js:136
+msgid "Reset"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/EmailModal.js:66
+msgid "Test email sent to the admin address."
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/EmailModal.js:80
+#: dev_gsbf/blocks/booking-form/inspector/index.js:46
+msgid "Email notifications"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/EmailModal.js:94
+#: dev_gsbf/blocks/booking-form/inspector/EmailPanel.js:17
+msgid "Loading…"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/EmailModal.js:100
+msgid "Settings"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/EmailModal.js:107
+msgid "Admin email"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/EmailModal.js:114
+msgid "Customer email"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/EmailModal.js:146
+msgid "Send test email"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/FooterEditor.js:31
+msgid "Bold"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/FooterEditor.js:32
+msgid "Italic"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/FooterEditor.js:36
+msgid "Underline"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/FooterEditor.js:41
+msgid "List"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/FooterEditor.js:61
+msgid "Link"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/FooterEditor.js:66
+msgid "Link URL"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/FooterEditor.js:78
+msgid "Clear formatting"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/FooterEditor.js:95
+msgid "Footer text"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/PreviewTab.js:43
+msgid "Preview with sample data. The real email fills in the booking details."
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/PreviewTab.js:50
+msgid "The preview could not be loaded."
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/PreviewTab.js:58
+msgid "Email preview"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:18
+msgid "The common name for all the outgoing emails."
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:28
+msgid "Email Address"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:32
+msgid "All emails will be sent from this email address."
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:42
+msgid "Send admin emails to"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:46
+msgid "The address that receives new booking requests."
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:55
+msgid "Approval"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:58
+msgid "Each booking is saved as Pending. The customer is emailed only after you click Confirm in the admin email."
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:62
+msgid "Bookings are confirmed instantly. The customer gets the confirmation email right away."
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:71
+msgid "Admin confirms by email"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:78
+msgid "Confirm automatically"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:88
+msgid "Email Template"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:92
+msgid "Content Type"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:93
+msgid "HTML sends the designed layout. Plain text sends simple text."
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:102
+msgid "Plain text"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:113
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:127
+msgid "Logo"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:116
+msgid "Shown in the branded email header."
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:150
+msgid "Upload"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:164
+msgid "Remove"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:172
+msgid "Brand Color"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:175
+msgid "Used for the email header band and buttons. It is this form's accent color."
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:187
+msgid "Brand color"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:198
+msgid "Footer Text"
+msgstr ""
+
+#. translators: %d: number of days
+#: dev_gsbf/blocks/booking-form/inspector/AvailabilityPanel.js:23
+#, js-format
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: dev_gsbf/blocks/booking-form/inspector/AvailabilityPanel.js:43
+msgid "Available days"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/AvailabilityPanel.js:70
+msgid "From"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/AvailabilityPanel.js:82
+msgid "To"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/AvailabilityPanel.js:93
+msgid "Minimum notice"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/AvailabilityPanel.js:101
+#: dev_gsbf/blocks/booking-form/inspector/AvailabilityPanel.js:128
+msgid "None"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/AvailabilityPanel.js:112
+msgid "Buffer between bookings"
+msgstr ""
+
+#. translators: %d: minutes
+#: dev_gsbf/blocks/booking-form/inspector/AvailabilityPanel.js:122
+#, js-format
+msgid "%d min"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/AvailabilityPanel.js:136
+msgid "Book up to"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/AvailabilityPanel.js:141
+msgid "2 weeks"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/BookingPanel.js:23
+msgid "Event title"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/BookingPanel.js:29
+msgid "Description"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/BookingPanel.js:37
+msgid "Form layout"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/BookingPanel.js:43
+msgid "Step by step"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/BookingPanel.js:50
+msgid "One at a time"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/BookingPanel.js:73
+msgid "Duration"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/BookingPanel.js:96
+msgid "Custom"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/BookingPanel.js:107
+msgid "Custom duration (minutes)"
+msgstr ""
+
+#. translators: %s: admin email address
+#: dev_gsbf/blocks/booking-form/inspector/EmailPanel.js:21
+#, js-format
+msgid "Requests go to %s."
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/EmailPanel.js:27
+msgid "You confirm each booking from the email."
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/EmailPanel.js:31
+msgid "Bookings are confirmed automatically."
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/EmailPanel.js:41
+msgid "Configure email"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/FormPanel.js:8
+msgid "Name and Email are always required."
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/FormPanel.js:15
+msgid "Require phone number"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/FormPanel.js:26
+msgid "Confirmation message"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/index.js:19
+msgid "Booking"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/index.js:25
+msgid "Availability"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/index.js:31
+msgid "Form and messages"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/index.js:40
+msgid "Style"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/StylePanel.js:26
+msgid "Accent color"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/StylePanel.js:49
+msgid "Custom color"
+msgstr ""
+
+#: dev_gsbf/blocks/booking-form/inspector/StylePanel.js:68
+msgid "Hex color"
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:276
+msgid "Select a date and time."
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:296
+msgid "Choose a different time to reschedule."
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:341
+msgid "Select a date and time"
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:345
+msgid "Select a date"
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:355
+msgid "Loading your booking…"
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:373
+msgid "Your current time will be released right away. If the host does not approve the new time within 48 hours, your booking will be cancelled."
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:386
+msgid "Confirm new time"
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:408
+msgid "This link is invalid or has expired. You can still book a new time below."
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:416
+msgid "Choose a new date and time for your booking."
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:447
+msgid "Available times"
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:460
+msgid "Select a date to see available times."
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:464
+msgid "No available days. Enable days in the block settings."
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:481
+#: dev_gsbf/components/DetailsStep.js:146
+msgid "Back"
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:494
+msgid "Next"
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:495
+msgid "Continue"
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:515
+#: dev_gsbf/components/BookingWidget.js:551
+msgid "Your booking is pending"
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:519
+#: dev_gsbf/components/BookingWidget.js:555
+msgid "Booking confirmed"
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:521
+msgid "This booking is waiting for the host to approve it. You will get a confirmation email once they do."
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:525
+msgid "Your booking is confirmed. We look forward to speaking with you."
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:531
+msgid "Your reschedule request is pending"
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:535
+msgid "Booking rescheduled"
+msgstr ""
+
+#. translators: %s: first name
+#: dev_gsbf/components/BookingWidget.js:539
+#, js-format
+msgid "Thanks, %s. Your new time is waiting for the host to approve it. If it is not approved within 48 hours, your booking will be cancelled. We will email you."
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:543
+#: dev_gsbf/components/BookingWidget.js:563
+msgid "there"
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:545
+msgid "Your booking is now at the new time. We emailed you the details."
+msgstr ""
+
+#. translators: %s: first name
+#: dev_gsbf/components/BookingWidget.js:559
+#, js-format
+msgid "Thanks, %s. Your booking is not confirmed yet. It is waiting for the host to approve it, and you will get a confirmation email once they do."
+msgstr ""
+
+#: dev_gsbf/components/BookingWidget.js:599
+msgid "Booking ID"
+msgstr ""
+
+#: dev_gsbf/components/Calendar.js:58
+msgid "Previous month"
+msgstr ""
+
+#: dev_gsbf/components/Calendar.js:70
+msgid "Next month"
+msgstr ""
+
+#. translators: %s: timezone
+#: dev_gsbf/components/Calendar.js:92
+#, js-format
+msgid "Times shown in %s"
+msgstr ""
+
+#: dev_gsbf/components/DetailsStep.js:58
+msgid "Change"
+msgstr ""
+
+#: dev_gsbf/components/DetailsStep.js:63
+msgid "Your full name"
+msgstr ""
+
+#: dev_gsbf/components/DetailsStep.js:82
+msgid "(optional)"
+msgstr ""
+
+#: dev_gsbf/components/DetailsStep.js:120
+msgid "I understand"
+msgstr ""
+
+#: dev_gsbf/components/DetailsStep.js:155
+msgid "Saving…"
+msgstr ""
+
+#: dev_gsbf/components/SlotList.js:24
+msgid "Loading times…"
+msgstr ""
+
+#: dev_gsbf/components/SlotList.js:30
+msgid "No times left on this day."
+msgstr ""
+
+#: dev_gsbf/components/SlotList.js:55
+msgid "Current"
+msgstr ""
+
+#: dev_gsbf/components/SlotList.js:76
+msgid "12-hour format"
+msgstr ""
+
+#: dev_gsbf/components/SlotList.js:87
+msgid "24-hour format"
+msgstr ""
+
+#: blocks/booking-form/block.json
+msgctxt "block title"
+msgid "GemBooking Form"
+msgstr ""
+
+#: blocks/booking-form/block.json
+msgctxt "block description"
+msgid "Let visitors book a time slot. You confirm by email."
+msgstr ""
+
+#: blocks/booking-form/block.json
+msgctxt "block keyword"
+msgid "booking"
+msgstr ""
+
+#: blocks/booking-form/block.json
+msgctxt "block keyword"
+msgid "appointment"
+msgstr ""
+
+#: blocks/booking-form/block.json
+msgctxt "block keyword"
+msgid "schedule"
+msgstr ""
+
+#: blocks/booking-form/block.json
+msgctxt "block keyword"
+msgid "calendar"
+msgstr ""
+
+#: blocks/booking-form/block.json
+msgctxt "block keyword"
+msgid "gembooking"
+msgstr ""

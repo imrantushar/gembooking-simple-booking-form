@@ -1,0 +1,44 @@
+# WordPress.org submission build (npm run dist:wporg).
+#
+# Same as .distignore, except the React/Sass source (dev_gsbf) and the build
+# config (package.json, webpack.config.js) SHIP with the plugin, so the compiled
+# assets under assets/build are publicly reviewable and reproducible.
+
+# VCS / editor / OS / AI tooling
+.git
+.gitignore
+.gitattributes
+.github
+.vscode
+.idea
+.claude
+.agents
+.cursor
+.DS_Store
+Thumbs.db
+
+# Release tooling
+build-tools
+build.config.json
+.build-cache
+
+# This file itself
+.distignore
+.distignore-wporg
+
+# The installed toolchain is never shipped
+node_modules
+
+# PHP dev tooling
+composer.json
+composer.lock
+phpcs.xml
+phpunit.xml*
+vendor
+
+# Tests and docs
+tests
+docs
+ARCHITECTURE.md
+
+**/*.map

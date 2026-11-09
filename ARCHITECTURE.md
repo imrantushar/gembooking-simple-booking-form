@@ -55,7 +55,7 @@ final class GembookingSimpleBookingForm {                     // global namespac
     init_plugin():        do_action('gsbf_before_init'); dispatch_hooks(); do_action('gsbf_init');
     dispatch_hooks():     init:0 load_textdomain; Database::init(); Blocks::init(); Assets::init(); Api::init();
                           Frontend::init(); Privacy::init(); Classes\CleanupExpiredBookings::init();
-    load_dependency():    require includes/autoload.php; require includes/functions.php;
+    load_dependency():    require includes/autoload.php;
     activate():           Installer::init()   // seed settings, Database::create_initial_custom_table()
     deactivate():         Classes\CleanupExpiredBookings::unschedule()
 }
@@ -97,12 +97,11 @@ gembooking-simple-booking-form/
 ├─ ARCHITECTURE.md  docs/
 ├─ build-tools/{build.mjs, README.md}        # adapted from gembooking; no vendor-licenses/strauss/i18n-strings
 ├─ includes/
-│  ├─ autoload.php  functions.php  helper.php
+│  ├─ autoload.php  helper.php
 │  ├─ installer.php   database.php   privacy.php   assets.php   blocks.php   api.php   frontend.php
 │  ├─ database/create-bookings-table.php     # CreateBookingsTable::up($prefix,$charset) via dbDelta
 │  ├─ privacy/{exporter.php, eraser.php}
-│  ├─ api/{availability-controller.php, booking-controller.php, booking-action-controller.php,
-│  │      email-settings-controller.php}
+│  ├─ api/{availability-controller.php, booking-controller.php, email-settings-controller.php}
 │  ├─ classes/
 │  │   ├─ config.php  config-signer.php        # sanitize block attrs / HMAC sign+verify
 │  │   ├─ slot-calendar.php                    # pure: config + date → slots
@@ -116,14 +115,15 @@ gembooking-simple-booking-form/
 │  ├─ frontend/action-page.php                # confirm/decline/cancel landing page
 │  └─ render/form.php                         # Render\Form: block mount HTML
 ├─ blocks/booking-form/block.json
-├─ templates/{form.php, action-page.php, email/{layout.php, admin.php, customer.php, plain.php}}
+├─ templates/{form.php, action-page.php, email/{layout.php, plain.php}}
 ├─ dev_gsbf/                                  # JS source (gembooking: dev_gembooking)
 │  ├─ blocks.js  frontend.js                  # entries
 │  ├─ blocks/booking-form/{index.js, edit.js, toolbar.js, inspector/*, email-settings/*}
 │  ├─ components/{BookingWidget, Calendar, SlotList, Details, Done, ...}
 │  ├─ hooks/  utils/{time.js, validate.js, api.js, url-params.js}  styles/
-├─ assets/build/                              # [name].[version].js (git-ignored, shipped)
-├─ languages/   tests/
+├─ assets/build/                              # [name].[version].js (committed separately from the source)
+├─ languages/   tests/{php/{bootstrap,run,integration,*-test}.php, js/*.test.js}
+├─ eslint.config.cjs
 ```
 `webpack.config.js`: spread `@wordpress/scripts` config (as gembooking), entries `blocks` + `frontend` from
 `dev_gsbf`, `output.filename: [name].${version}.js` → `assets/build`, `CleanWebpackPlugin`, aliases
@@ -168,7 +168,8 @@ CREATE statement, schema version in `gsbf_db_version`).
 | `id` | BIGINT UNSIGNED AI | PK |
 | `ref` | VARCHAR(16) UNIQUE | public code `GB-7K3M9Q`, not sequential |
 | `form_id` | CHAR(36) | block `formId` |
-| `page_url` | TEXT | page where it was booked (from the signed config); used to build the reschedule link |
+| `page_url` | TEXT | page where it was booked (from the signed config); used to build the email links |
+| `accent` | VARCHAR(7) | the booked form's accent colour (brand colour of later emails) |
 | `event_title` | VARCHAR(255) | snapshot |
 | `start_utc`, `end_utc` | DATETIME | UTC |
 | `timezone` | VARCHAR(64) | IANA id the slot was offered in |
@@ -206,7 +207,8 @@ form timezone; slots from `startHour`, step `duration+buffer`, `slot+duration �
 **customer** (confirmation with View/Reschedule) + FYI to **admin** → `201 {ref,status,start,end}`.
 
 **Confirm / Decline (admin, manual mode)** — email link `{page}?gsbf_action=confirm|decline&gsbf_booking=<id>&gsbf_token=<t>`
-→ landing page (GET never changes state, scanner-safe) → button POSTs `/booking-actions` → token valid + row is
+→ landing page (GET never changes state, scanner-safe) → the button POSTs to the same URL (handled by
+`Frontend\ActionPage`, no REST route) → token valid + row is
 `pending` → confirm: status `confirmed` + customer email (View/Reschedule) · decline: customer "declined" email,
 then **DELETE row**. Second click → "already decided", no email.
 
@@ -244,7 +246,7 @@ customer must tick/confirm before submitting.
 
 **Cancel (customer)** — email link `{page_url}?gsbf_action=cancel&gsbf_booking=<id>&gsbf_token=<t>` → landing page
 (`Frontend\ActionPage`, GET shows booking summary + "Cancel booking" button, POST executes, scanner-safe) →
-`POST /booking-actions` → token valid + row exists → emails **customer** (cancelled confirmation) + **admin**
+the POST → token valid + row exists → emails **customer** (cancelled confirmation) + **admin**
 (booking cancelled), then **DELETE row** (slot freed, same as decline) **[ASSUMED: delete, like decline]**.
 
 Tokens: `base64url(exp . '.' . HMAC(id|action|exp, wp_salt('auth')))` (same construction as gembooking's
@@ -280,7 +282,6 @@ customer), **expired** (customer). HTML emails use the same system font stack.
 | `/bookings` | POST | public + signed config + anti-spam |
 | `/bookings/{id}` | GET | signed token (`view` or `reschedule`), returns only that booking |
 | `/bookings/{id}/reschedule` | POST | signed token + signed config |
-| `/booking-actions` | POST | signed token (`confirm`/`decline`/`cancel`) |
 | `/email-settings` (+`/test`, `/preview`) | GET/POST | `manage_options` + REST nonce |
 
 Explicit `permission_callback`, `args` sanitize/validate, `WP_Error` with proper codes (400/403/409/429).
@@ -312,3 +313,30 @@ None. Design re-read done (customer-only third button; per-field email editing p
 close the two gaps found (admin recipient / approval mode controls, and the screens missing from the design).
 Next step is implementation, in this order: bootstrap + autoload + constants → database + installer →
 `Config`/`ConfigSigner`/`SlotCalendar` (+ unit tests) → REST + `BookingService` → email → block + widget.
+
+## 15. Implementation status (built and verified)
+
+Everything in sections 1-14 is implemented. Differences from the plan above:
+
+- No `functions.php` (nothing needed it). Confirm / decline / cancel are handled by the landing page's own POST,
+  so there is no `booking-actions` REST route and no `booking-action-controller.php`.
+- The bookings table has an `accent` column (emails after a click on a link need the form's brand colour).
+- The design's email preview shows no banner / body text / footer; the real emails add a one-line status banner and a
+  short body sentence (needed so every state, e.g. "reschedule not approved", is explained), and the footer text.
+- `phone` is accepted only as digits and `+ - ( ) .` and spaces.
+- Release: `npm run dist` (JS build -> POT -> zip) works; the zip has no vendor, no source, no dev files.
+
+Verification done:
+
+| Check | Result |
+|---|---|
+| `php tests/php/run.php` (SlotCalendar incl. DST, Config clamping, BookingToken, ConfigSigner) | 24 passed |
+| `wp eval-file tests/php/integration.php` (REST availability / create / double booking / spam / view / confirm / reschedule / decline / cancel / 48 h expiry / auto approval / privacy / previews, real DB) | 46 passed |
+| `npm run test:unit` (JS time + slot rules) | 5 passed |
+| `vendor/bin/phpcs` (WPCS + PHPCompatibilityWP 8.1) | clean |
+| `npm run lint:js` | clean |
+| Real HTTP: block renders, REST over HTTP, confirm landing page GET/POST/second click/forged token | works |
+| Browser (Chrome): front end pick -> details -> pending screen, reschedule entry from email link (current slot preselected), "One at a time" layout, block editor (sidebar, email modal, admin email preview) | works, no console errors |
+
+Not verified: a real mobile viewport (the CSS wraps with flex and `minmax`, but the window could not be narrowed in
+this session), a real SMTP delivery (mail was captured with `pre_wp_mail`), WordPress.org Plugin Check, translations.

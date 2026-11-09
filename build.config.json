@@ -1,0 +1,19 @@
+{
+  "slug": "gembooking-simple-booking-form",
+  "textdomain": "gembooking-simple-booking-form",
+  "mainFile": "gembooking-simple-booking-form.php",
+  "languages": "languages",
+  "zipName": "{slug}.{version}.zip",
+  "outputDir": "..",
+
+  "steps": { "js": true, "composer": false, "strauss": false, "pot": true, "zip": true },
+
+  "js": { "install": "auto", "buildScript": "build" },
+
+  "pot": {
+    "command": "npm run wp:pot"
+  },
+
+  "autoDownloadTools": true,
+  "toolVersions": { "wpCli": "2.12.0" }
+}
