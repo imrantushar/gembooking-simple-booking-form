@@ -1,3 +1,4 @@
+/* stylelint-disable @stylistic/max-line-length -- long design values and comments */
 // GemBooking Simple Booking Form - widget styles (editor preview + front end).
 // Values come from the Claude Design project. Font: WordPress default system stack.
 
@@ -8,7 +9,7 @@
 	--gsbf-muted: #646c73;
 	--gsbf-border: #e0e4e8;
 	--gsbf-surface: #f6f7f8;
-	--gsbf-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	--gsbf-font: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, oxygen-sans, ubuntu, cantarell, "Helvetica Neue", sans-serif;
 
 	font-family: var(--gsbf-font);
 	font-size: 14px;
@@ -60,6 +61,41 @@
 	padding: 40px 24px;
 	text-align: center;
 	color: var(--gsbf-muted);
+}
+
+/* ---- event header (title + duration) ------------------------------------- */
+
+.gsbf-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 20px 24px 0;
+}
+
+.gsbf-head-title {
+	min-width: 0;
+	font-size: 18px;
+	font-weight: 600;
+	line-height: 1.3;
+	overflow-wrap: anywhere;
+}
+
+.gsbf-pill {
+	flex-shrink: 0;
+	padding: 4px 10px;
+	border-radius: 999px;
+	background: #eef0f2;
+	color: var(--gsbf-text);
+	font-size: 12px;
+	font-weight: 500;
+	white-space: nowrap;
+}
+
+// With a header above, the step below needs less top padding.
+.gsbf-head + .gsbf-pick,
+.gsbf-head + .gsbf-details {
+	padding-top: 16px;
 }
 
 /* ---- pick step ---------------------------------------------------------- */
@@ -525,6 +561,12 @@
 }
 
 @media (max-width: 480px) {
+
+	.gsbf-head {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
 	.gsbf-pick,
 	.gsbf-details,
 	.gsbf-done {

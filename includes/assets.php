@@ -55,11 +55,17 @@ class Assets {
 			return; // Not built yet (a fresh clone before `npm run build`).
 		}
 
+		// Cache-busting version: the bundle's modified time. The version hash in the
+		// .asset.php file would also do, but that file is include()d and can stay
+		// stale in OPcache after a rebuild, so the browser would keep an old bundle.
+		$mtime   = filemtime( $base . '.js' );
+		$version = false !== $mtime ? (string) $mtime : $asset['version'];
+
 		wp_register_script(
 			$handle,
 			GSBF_ASSETS_URI . 'build/' . $name . '.' . GSBF_VERSION . '.js',
 			$asset['dependencies'],
-			$asset['version'],
+			$version,
 			[ 'in_footer' => true ]
 		);
 		wp_add_inline_script(
@@ -74,7 +80,7 @@ class Assets {
 				$handle,
 				GSBF_ASSETS_URI . 'build/' . $name . '.css',
 				[],
-				$asset['version']
+				$version
 			);
 			wp_style_add_data( $handle, 'rtl', 'replace' );
 		}

@@ -6,12 +6,7 @@ import {
 	useBlockProps,
 } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
-import {
-	Button,
-	Modal,
-	ToolbarButton,
-	ToolbarGroup,
-} from '@wordpress/components';
+import { Modal, ToolbarButton, ToolbarGroup } from '@wordpress/components';
 import BookingWidget from '../../components/BookingWidget';
 import { createMockApi } from '../../utils/api';
 import { normalizeConfig, uuid } from '../../utils/config';
@@ -31,18 +26,28 @@ function PreviewModal( { config, api, onClose } ) {
 			isFullScreen
 		>
 			<div className="gsbf-preview-bar">
-				<Button
-					variant={ device === 'desktop' ? 'primary' : 'secondary' }
-					onClick={ () => setDevice( 'desktop' ) }
-				>
-					{ __( 'Desktop', 'gembooking-simple-booking-form' ) }
-				</Button>
-				<Button
-					variant={ device === 'mobile' ? 'primary' : 'secondary' }
-					onClick={ () => setDevice( 'mobile' ) }
-				>
-					{ __( 'Mobile', 'gembooking-simple-booking-form' ) }
-				</Button>
+				<div className="gsbf-seg-control is-compact" role="group">
+					{ [
+						[
+							'desktop',
+							__( 'Desktop', 'gembooking-simple-booking-form' ),
+						],
+						[
+							'mobile',
+							__( 'Mobile', 'gembooking-simple-booking-form' ),
+						],
+					].map( ( [ value, label ] ) => (
+						<button
+							key={ value }
+							type="button"
+							className={ device === value ? 'is-on' : '' }
+							aria-pressed={ device === value }
+							onClick={ () => setDevice( value ) }
+						>
+							{ label }
+						</button>
+					) ) }
+				</div>
 				<span className="gsbf-preview-note">
 					{ __(
 						'Settings update the form live. Bookings made here are not saved.',

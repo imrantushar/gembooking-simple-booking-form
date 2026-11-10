@@ -606,8 +606,27 @@ export default function BookingWidget( { config, api, entry = null } ) {
 		);
 	}
 
+	// The event title and its duration head the form while the visitor picks a
+	// time and enters details. The done screen already lists the event.
+	const showHead =
+		!! config.title &&
+		entryState !== 'loading' &&
+		! ( step === 'done' && result );
+
 	return (
 		<div className="gsbf-frame" ref={ root }>
+			{ showHead && (
+				<div className="gsbf-head">
+					<div className="gsbf-head-title">{ config.title }</div>
+					<span className="gsbf-pill">
+						{ sprintf(
+							/* translators: %d: duration in minutes */
+							__( '%d min', 'gembooking-simple-booking-form' ),
+							config.duration
+						) }
+					</span>
+				</div>
+			) }
 			{ content }
 		</div>
 	);

@@ -22,7 +22,6 @@ class Config {
 		return [
 			'formId'        => '',
 			'title'         => '30-minute consultation',
-			'description'   => 'A short call to talk through your project and next steps.',
 			'layout'        => 'step',
 			'duration'      => 30,
 			'days'          => [ 1, 2, 3, 4, 5 ],
@@ -80,7 +79,6 @@ class Config {
 		return [
 			'formId'        => $form_id,
 			'title'         => self::truncate( sanitize_text_field( (string) ( $raw['title'] ?? $d['title'] ) ), 120 ),
-			'description'   => self::truncate( sanitize_textarea_field( (string) ( $raw['description'] ?? $d['description'] ) ), 400 ),
 			'layout'        => in_array( $layout, self::LAYOUTS, true ) ? $layout : $d['layout'],
 			'duration'      => $duration,
 			'days'          => $days,

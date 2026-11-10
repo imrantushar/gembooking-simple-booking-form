@@ -1,10 +1,10 @@
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { TextControl } from '@wordpress/components';
 import { ACCENT_SWATCHES } from '../../../utils/config';
+import { GroupLabel } from '../../../components/ui';
 
 export default function StylePanel( { attributes, setAttributes } ) {
-	const accent = attributes.accent;
+	const accent = attributes.accent.toUpperCase();
 	const [ hex, setHex ] = useState( accent );
 
 	useEffect( () => setHex( accent ), [ accent ] );
@@ -20,32 +20,35 @@ export default function StylePanel( { attributes, setAttributes } ) {
 		}
 	};
 
+	const preset = ACCENT_SWATCHES.some( ( [ , color ] ) => color === accent );
+
 	return (
-		<div className="gsbf-field">
-			<span className="gsbf-field-label">
+		<div className="gsbf-sb-field">
+			<GroupLabel id="gsbf-accent-label">
 				{ __( 'Accent color', 'gembooking-simple-booking-form' ) }
-			</span>
-			<div className="gsbf-swatches">
+			</GroupLabel>
+			<div
+				className="gsbf-swatches"
+				role="group"
+				aria-labelledby="gsbf-accent-label"
+			>
 				{ ACCENT_SWATCHES.map( ( [ name, color ] ) => (
 					<button
 						key={ color }
 						type="button"
 						aria-label={ name }
-						aria-pressed={ accent.toUpperCase() === color }
-						className="gsbf-swatch"
-						style={ {
-							background: color,
-							boxShadow:
-								accent.toUpperCase() === color
-									? `0 0 0 2px #fff, 0 0 0 4px ${ color }`
-									: '0 0 0 1px #e0e4e8',
-						} }
+						aria-pressed={ accent === color }
+						className={ `gsbf-swatch${ accent === color ? ' is-on' : '' }` }
+						style={ { '--swatch': color } }
 						onClick={ () => setAttributes( { accent: color } ) }
 					/>
 				) ) }
 				{ /* eslint-disable-next-line jsx-a11y/label-has-associated-control -- the colour input is nested in the label */ }
 				<label
-					className="gsbf-swatch is-custom"
+					className={ `gsbf-swatch is-custom${
+						! preset ? ' is-on' : ''
+					}` }
+					style={ { '--swatch': preset ? '#f6f7f8' : accent } }
 					aria-label={ __(
 						'Custom color',
 						'gembooking-simple-booking-form'
@@ -60,16 +63,25 @@ export default function StylePanel( { attributes, setAttributes } ) {
 							} )
 						}
 					/>
-					<span>+</span>
+					<span aria-hidden="true">+</span>
 				</label>
 			</div>
-			<TextControl
-				__nextHasNoMarginBottom
-				label={ __( 'Hex color', 'gembooking-simple-booking-form' ) }
-				value={ hex }
-				maxLength={ 7 }
-				onChange={ onHex }
-			/>
+			<div className="gsbf-hex-row">
+				<span className="gsbf-dot" style={ { background: accent } } />
+				<input
+					className="gsbf-sb-input is-hex"
+					value={ hex }
+					maxLength={ 7 }
+					aria-label={ __(
+						'Hex color',
+						'gembooking-simple-booking-form'
+					) }
+					onChange={ ( e ) => onHex( e.target.value ) }
+				/>
+				<span className="gsbf-sb-hint is-inline">
+					{ __( 'Custom color', 'gembooking-simple-booking-form' ) }
+				</span>
+			</div>
 		</div>
 	);
 }

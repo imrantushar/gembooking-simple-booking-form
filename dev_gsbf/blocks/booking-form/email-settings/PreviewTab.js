@@ -39,14 +39,14 @@ export default function PreviewTab( { kind, settings, accent } ) {
 
 	return (
 		<div className="gsbf-mail-preview">
-			<p className="gsbf-help">
+			<p className="gsbf-sb-hint is-first">
 				{ __(
 					'Preview with sample data. The real email fills in the booking details.',
 					'gembooking-simple-booking-form'
 				) }
 			</p>
 			{ failed ? (
-				<p className="gsbf-help">
+				<p className="gsbf-sb-hint">
 					{ __(
 						'The preview could not be loaded.',
 						'gembooking-simple-booking-form'

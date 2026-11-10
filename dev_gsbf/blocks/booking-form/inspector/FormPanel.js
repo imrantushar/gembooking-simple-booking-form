@@ -1,17 +1,16 @@
 import { __ } from '@wordpress/i18n';
-import { TextareaControl, ToggleControl } from '@wordpress/components';
+import { Switch, TextAreaInput } from '../../../components/ui';
 
 export default function FormPanel( { attributes, setAttributes } ) {
 	return (
 		<>
-			<p className="gsbf-help">
+			<p className="gsbf-sb-hint is-first">
 				{ __(
 					'Name and Email are always required.',
 					'gembooking-simple-booking-form'
 				) }
 			</p>
-			<ToggleControl
-				__nextHasNoMarginBottom
+			<Switch
 				label={ __(
 					'Require phone number',
 					'gembooking-simple-booking-form'
@@ -21,15 +20,16 @@ export default function FormPanel( { attributes, setAttributes } ) {
 					setAttributes( { phoneRequired } )
 				}
 			/>
-			<TextareaControl
-				__nextHasNoMarginBottom
+			<TextAreaInput
 				label={ __(
 					'Confirmation message',
 					'gembooking-simple-booking-form'
 				) }
-				value={ attributes.message }
-				onChange={ ( message ) => setAttributes( { message } ) }
 				rows={ 3 }
+				value={ attributes.message }
+				onChange={ ( e ) =>
+					setAttributes( { message: e.target.value } )
+				}
 			/>
 		</>
 	);

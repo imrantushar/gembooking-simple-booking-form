@@ -1,41 +1,371 @@
+/* stylelint-disable @stylistic/max-line-length -- long design values and comments */
 // Block editor only: sidebar controls, email modal, preview modal.
+// Values come from the Claude Design project. The primary color is black
+// (#141A24), not the WordPress admin blue.
 
-.gsbf-field {
-	margin-bottom: 16px;
+// Re-point WordPress's theme color variables to black inside our own UI, so
+// every WP component we still use (panels, focus rings, modal controls)
+// follows the design.
+.gsbf-inspector,
+.gsbf-email-modal,
+.gsbf-preview-modal {
+	--wp-admin-theme-color: #141a24;
+	--wp-admin-theme-color--rgb: 20, 26, 36;
+	--wp-admin-theme-color-darker-10: #0b0e14;
+	--wp-admin-theme-color-darker-10--rgb: 11, 14, 20;
+	--wp-admin-theme-color-darker-20: #05070a;
+	--wp-admin-theme-color-darker-20--rgb: 5, 7, 10;
+	--wp-components-color-accent: #141a24;
+	--wp-components-color-accent-darker-10: #0b0e14;
+	--wp-components-color-accent-darker-20: #05070a;
+	--wp-components-color-accent-inverted: #fff;
 }
 
-.gsbf-field-label {
+/* ---- form controls (shared by the sidebar and the modal) ------------------ */
+
+.gsbf-sb-field {
+	margin: 12px 0 0;
+
+	&:first-child {
+		margin-top: 8px;
+	}
+}
+
+.gsbf-sb-label {
 	display: block;
-	margin-bottom: 8px;
-	font-size: 11px;
+	margin: 0 0 6px;
+	font-size: 13px;
 	font-weight: 500;
-	text-transform: uppercase;
+	line-height: 1.4;
+	color: #344054;
+	text-transform: none;
 }
 
-.gsbf-help {
-	margin: 0 0 12px;
+.gsbf-sb-hint {
+	margin: 6px 0 0;
 	font-size: 12px;
+	line-height: 18px;
 	color: #646c73;
+
+	&.is-first {
+		margin: 8px 0 12px;
+	}
+
+	&.is-inline {
+		margin: 0;
+		font-size: 11px;
+	}
 }
 
-.gsbf-chips {
+.gsbf-sb-input.gsbf-sb-input {
+	display: block;
+	width: 100%;
+	height: 36px;
+	min-height: 36px;
+	margin: 0;
+	padding: 0 10px;
+	border: 1px solid #d0d5dd;
+	border-radius: 4px;
+	background-color: #fff;
+	color: #141a24;
+	font-size: 14px;
+	line-height: 1.4;
+	box-shadow: none;
+
+	&:focus {
+		border-color: #141a24;
+		box-shadow: 0 0 0 1px #141a24;
+		outline: 2px solid transparent;
+	}
+
+	&::placeholder {
+		color: #8e949a;
+	}
+
+	&.is-select {
+		padding: 0 28px 0 8px;
+		max-width: none;
+	}
+
+	&.is-textarea {
+		height: auto;
+		min-height: 0;
+		padding: 8px 10px;
+		resize: vertical;
+	}
+
+	&.is-lg {
+		height: 40px;
+		min-height: 40px;
+		padding: 0 12px;
+		border-radius: 6px;
+
+		&.is-select {
+			padding: 0 28px 0 10px;
+		}
+	}
+
+	&.is-hex {
+		width: 110px;
+		font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+		font-size: 13px;
+		text-transform: uppercase;
+	}
+
+	&.is-hex-lg {
+		width: 128px;
+		text-transform: uppercase;
+	}
+}
+
+/* ---- segmented control (layout, duration, preview device) ---------------- */
+
+.gsbf-seg-control {
+	display: flex;
+	gap: 4px;
+	padding: 3px;
+	border-radius: 8px;
+	background: #f6f7f8;
+
+	button {
+		flex: 1;
+		min-width: 0;
+		height: 28px;
+		padding: 0 4px;
+		border: 0;
+		border-radius: 6px;
+		background: transparent;
+		color: #738496;
+		font-size: 13px;
+		font-weight: 400;
+		white-space: nowrap;
+		cursor: pointer;
+
+		// Selected option: solid black, like the selected day chips.
+		&.is-on {
+			background: #141a24;
+			color: #fff;
+			font-weight: 500;
+		}
+
+		&:focus-visible {
+			outline: 2px solid #141a24;
+			outline-offset: 1px;
+		}
+	}
+
+	// Duration: the last option ("Custom") is wider than the minute presets.
+	&.is-duration button:last-child {
+		flex: 1.8 1 0;
+	}
+
+	&.is-compact {
+		display: inline-flex;
+
+		button {
+			flex: none;
+			padding: 0 18px;
+			height: 32px;
+		}
+	}
+}
+
+/* ---- day chips ------------------------------------------------------------ */
+
+.gsbf-chips-row {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 6px;
 }
 
-.gsbf-two {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 12px;
-	margin-bottom: 16px;
+.gsbf-chip {
+	height: 32px;
+	padding: 0 10px;
+	border: 1px solid #e0e4e8;
+	border-radius: 6px;
+	background: #fff;
+	color: #434a51;
+	font-size: 13px;
+	font-weight: 400;
+	cursor: pointer;
+
+	// Selected day: solid black.
+	&.is-on {
+		border-color: #141a24;
+		background: #141a24;
+		color: #fff;
+		font-weight: 500;
+	}
+
+	&:focus-visible {
+		outline: 2px solid #141a24;
+		outline-offset: 1px;
+	}
 }
+
+.gsbf-two {
+	display: flex;
+	gap: 8px;
+	margin-top: 12px;
+
+	.gsbf-sb-field {
+		flex: 1;
+		min-width: 0;
+		margin-top: 0;
+	}
+}
+
+/* ---- switch --------------------------------------------------------------- */
+
+.gsbf-switch-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	min-height: 44px;
+	font-size: 14px;
+	color: #141a24;
+}
+
+.gsbf-switch {
+	position: relative;
+	flex-shrink: 0;
+	width: 38px;
+	height: 22px;
+	padding: 0;
+	border: 0;
+	border-radius: 999px;
+	background: #cbd1d7;
+	cursor: pointer;
+
+	&::after {
+		content: "";
+		position: absolute;
+		top: 2px;
+		left: 2px;
+		width: 18px;
+		height: 18px;
+		border-radius: 999px;
+		background: #fff;
+		transition: left 0.15s;
+	}
+
+	&[aria-checked="true"] {
+		background: #141a24;
+
+		&::after {
+			left: 18px;
+		}
+	}
+
+	&:focus-visible {
+		outline: 2px solid #141a24;
+		outline-offset: 2px;
+	}
+}
+
+/* ---- buttons -------------------------------------------------------------- */
+
+.gsbf-outline-btn,
+.gsbf-primary-btn,
+.gsbf-danger-btn {
+	height: 40px;
+	border-radius: 6px;
+	font-size: 14px;
+	font-weight: 500;
+	cursor: pointer;
+
+	&:disabled {
+		opacity: 0.55;
+		cursor: not-allowed;
+	}
+
+	&:focus-visible {
+		outline: 2px solid #141a24;
+		outline-offset: 2px;
+	}
+}
+
+.gsbf-outline-btn {
+	width: 100%;
+	padding: 0;
+	border: 1px solid #e0e4e8;
+	background: #fff;
+	color: #141a24;
+
+	&.is-inline {
+		width: auto;
+		padding: 0 16px;
+	}
+
+	&.is-small {
+		padding: 0 14px;
+		font-size: 13px;
+	}
+}
+
+.gsbf-primary-btn {
+	padding: 0 20px;
+	border: 0;
+	background: #141a24;
+	color: #fff;
+}
+
+.gsbf-danger-btn {
+	padding: 0 12px;
+	border: 1px solid #fecaca;
+	background: #fff;
+	color: #991b1b;
+	font-size: 13px;
+	font-weight: 400;
+}
+
+/* ---- sidebar panels ------------------------------------------------------- */
+
+.gsbf-inspector {
+
+	.components-panel__body {
+		padding: 0;
+		border: 0;
+		border-bottom: 1px solid #e0e4e8;
+	}
+
+	.components-panel__body-title,
+	.components-panel__body.is-opened > .components-panel__body-title {
+		margin: 0;
+		padding: 0;
+	}
+
+	.components-panel__body-title .components-button {
+		min-height: 44px;
+		padding: 0 16px;
+		color: #434a51;
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.4px;
+		text-transform: uppercase;
+
+		&:hover,
+		&[aria-expanded="true"] {
+			color: #141a24;
+		}
+	}
+
+	.components-panel__arrow {
+		right: 16px;
+		fill: #434a51;
+	}
+}
+
+.gsbf-panel-body {
+	padding: 0 16px 16px;
+}
+
+/* ---- accent color --------------------------------------------------------- */
 
 .gsbf-swatches {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 10px;
-	margin-bottom: 12px;
 }
 
 .gsbf-swatch {
@@ -45,57 +375,274 @@
 	padding: 0;
 	border: 2px solid #fff;
 	border-radius: 999px;
+	background: var(--swatch, #141a24);
+	box-shadow: 0 0 0 1px #e0e4e8;
 	cursor: pointer;
+
+	&.is-on {
+		box-shadow: 0 0 0 2px var(--swatch, #141a24);
+	}
 
 	&.is-custom {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		overflow: hidden;
-		background: #f6f7f8;
-		box-shadow: 0 0 0 1px #e0e4e8;
+		color: #434a51;
+		font-size: 16px;
+		line-height: 1;
 
 		input {
 			position: absolute;
 			inset: 0;
+			width: 100%;
+			height: 100%;
+			padding: 0;
+			border: 0;
 			opacity: 0;
 			cursor: pointer;
+		}
+
+		span {
+			pointer-events: none;
+		}
+	}
+
+	&:focus-visible {
+		outline: 2px solid #141a24;
+		outline-offset: 2px;
+	}
+}
+
+.gsbf-hex-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 12px;
+}
+
+.gsbf-dot {
+	flex-shrink: 0;
+	width: 20px;
+	height: 20px;
+	border-radius: 999px;
+	box-shadow: 0 0 0 1px #e0e4e8;
+}
+
+/* ---- email modal ---------------------------------------------------------- */
+
+.components-modal__screen-overlay:has(> .gsbf-email-modal),
+.components-modal__screen-overlay:has(> .gsbf-preview-modal) {
+	background: rgba(20, 26, 36, 0.45);
+}
+
+.gsbf-email-modal.components-modal__frame {
+	width: 1040px;
+	max-width: calc(100% - 32px);
+	max-height: 92vh;
+	border-radius: 12px;
+	box-shadow: 0 8px 30px rgba(20, 26, 36, 0.22);
+}
+
+.gsbf-email-modal,
+.gsbf-preview-modal {
+
+	.components-modal__content {
+		display: flex;
+		flex-direction: column;
+		padding: 0;
+		margin: 0;
+		overflow: hidden;
+	}
+
+	// WordPress wraps our content in this extra element; it must be a flex
+	// column too, or the body would overflow instead of scrolling and the
+	// action bar would be pushed out of view.
+	.components-modal__children-container {
+		display: flex;
+		flex: 1 1 auto;
+		flex-direction: column;
+		min-height: 0;
+	}
+
+	.components-modal__header {
+		position: static;
+		flex-shrink: 0;
+		height: auto;
+		margin: 0;
+		padding: 16px 20px 0;
+		border: 0;
+		background: transparent;
+
+		h1 {
+			font-size: 18px;
+			font-weight: 600;
+			color: #141a24;
+		}
+
+		.components-button {
+			width: 36px;
+			height: 36px;
+			min-width: 36px;
+			padding: 0;
+			border-radius: 999px;
+			background: #f6f7f8;
+			color: #141a24;
+
+			&:hover {
+				background: #e0e4e8;
+				color: #141a24;
+			}
 		}
 	}
 }
 
-.gsbf-email-modal {
-	width: min(760px, 96vw);
+.gsbf-modal-tabs {
+	display: flex;
+	flex-shrink: 0;
+	gap: 20px;
+	padding: 0 20px;
+	border-bottom: 1px solid #e0e4e8;
+	overflow-x: auto;
 
-	.components-modal__content {
-		overflow-x: hidden;
-	}
+	button {
+		height: 44px;
+		padding: 0;
+		border: 0;
+		border-bottom: 2px solid transparent;
+		background: none;
+		color: #738496;
+		font-size: 14px;
+		font-weight: 400;
+		white-space: nowrap;
+		cursor: pointer;
 
-	.components-modal__content {
-		padding-bottom: 0;
-	}
+		&.is-on {
+			border-bottom-color: #141a24;
+			color: #141a24;
+			font-weight: 600;
+		}
 
-	h3 {
-		margin: 20px 0 12px;
-		font-size: 13px;
-		font-weight: 600;
-		text-transform: uppercase;
-		color: #434a51;
-	}
-
-	.components-base-control {
-		margin-bottom: 16px;
+		&:focus-visible {
+			outline: 2px solid #141a24;
+			outline-offset: -2px;
+		}
 	}
 }
 
-.gsbf-settings {
-	padding-top: 4px;
+.gsbf-modal-body {
+	flex: 1 1 auto;
+	min-height: 0;
+	overflow: auto;
+	background: #f6f7f8;
+}
+
+.gsbf-modal-loading {
+	margin: 0;
+	padding: 32px 20px;
+	color: #646c73;
+}
+
+.gsbf-notice {
+	flex-shrink: 0;
+	margin: 12px 20px 0;
+	padding: 10px 12px;
+	border-radius: 8px;
+	font-size: 13px;
+
+	&.is-success {
+		background: #dcfce7;
+		color: #166534;
+	}
+
+	&.is-error {
+		background: #fee2e2;
+		color: #991b1b;
+	}
+}
+
+.gsbf-modal-actions {
+	display: flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	padding: 14px 20px;
+	border-top: 1px solid #e0e4e8;
+	background: #fff;
+}
+
+/* Settings tab: cards with title / description on the left, control on the right. */
+
+.gsbf-mail-settings {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	padding: 20px;
+}
+
+.gsbf-card {
+	padding: 20px 24px 12px;
+	border: 1px solid #e0e4e8;
+	border-radius: 8px;
+	background: #fff;
+
+	h3 {
+		margin: 0 0 8px;
+		font-size: 20px;
+		font-weight: 400;
+		text-transform: none;
+		color: #141a24;
+	}
+}
+
+.gsbf-setting {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 12px 0;
+
+	&.is-block {
+		display: block;
+		padding: 12px 0 8px;
+
+		.gsbf-setting-title {
+			margin-bottom: 8px;
+		}
+	}
+}
+
+.gsbf-setting-text {
+	flex: 1 1 220px;
+	min-width: 0;
+}
+
+.gsbf-setting-title {
+	font-size: 14px;
+	font-weight: 500;
+	color: #141a24;
+}
+
+.gsbf-setting-desc {
+	margin-top: 2px;
+	font-size: 13px;
+	line-height: 19px;
+	color: #646c73;
+}
+
+.gsbf-setting-control {
+	flex: 0 1 300px;
+	width: 300px;
+	max-width: 100%;
 }
 
 .gsbf-logo {
 	display: flex;
 	align-items: center;
-	gap: 10px;
+	justify-content: flex-end;
+	gap: 12px;
 }
 
 .gsbf-logo-box {
@@ -108,8 +655,8 @@
 	border: 1px dashed #d0d5dd;
 	border-radius: 4px;
 	background: #f9fafb;
-	font-size: 10px;
-	color: #646c73;
+	font-size: 11px;
+	color: #8e949a;
 
 	img {
 		width: 100%;
@@ -119,36 +666,95 @@
 }
 
 .gsbf-brand {
-	display: inline-flex;
-	align-items: center;
+	display: flex;
+	justify-content: flex-end;
 	gap: 10px;
 }
 
-.gsbf-footer-editor {
-	border: 1px solid #d0d5dd;
+.gsbf-brand-swatch {
+	position: relative;
+	display: block;
+	flex-shrink: 0;
+	width: 40px;
+	height: 40px;
+	padding: 3px;
+	border: 1px solid #141a24;
 	border-radius: 4px;
+
+	span {
+		display: block;
+		width: 100%;
+		height: 100%;
+		border-radius: 2px;
+	}
+
+	input {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		padding: 0;
+		border: 0;
+		opacity: 0;
+		cursor: pointer;
+	}
+}
+
+.gsbf-footer-editor {
+	overflow: hidden;
+	border: 1px solid #e0e4e8;
+	border-radius: 8px;
 }
 
 .gsbf-footer-tools {
 	display: flex;
+	align-items: center;
 	gap: 2px;
-	padding: 4px;
+	padding: 8px;
 	border-bottom: 1px solid #e0e4e8;
-	background: #f6f7f8;
+	background: #f9fafb;
 }
 
-.gsbf-footer-area {
-	min-height: 72px;
-	padding: 8px 10px;
-	font-size: 13px;
+.gsbf-tool {
+	width: 32px;
+	height: 32px;
+	padding: 0;
+	border: 0;
+	border-radius: 4px;
+	background: none;
+	color: #141a24;
+	font-size: 14px;
+	cursor: pointer;
 
-	&:focus {
-		outline: 2px solid #141a24;
-		outline-offset: -2px;
+	&:hover {
+		background: #e0e4e8;
 	}
 }
 
+.gsbf-tool-sep {
+	width: 1px;
+	height: 20px;
+	margin: 0 6px;
+	background: #e0e4e8;
+}
+
+.gsbf-footer-area {
+	min-height: 110px;
+	padding: 14px 16px;
+	background: #fff;
+	font-size: 14px;
+	line-height: 21px;
+	outline: none;
+}
+
+/* Email preview tabs. */
+
+.gsbf-mail-preview {
+	padding: 20px;
+}
+
 .gsbf-mail-frame {
+	display: block;
 	width: 100%;
 	height: 560px;
 	border: 1px solid #e0e4e8;
@@ -156,34 +762,30 @@
 	background: #f6f7f8;
 }
 
-.gsbf-modal-actions {
-	position: sticky;
-	bottom: 0;
-	display: flex;
-	justify-content: flex-end;
-	gap: 8px;
-	margin-top: 16px;
-	padding: 12px 0;
-	border-top: 1px solid #e0e4e8;
-	background: #fff;
+/* ---- preview-form modal --------------------------------------------------- */
+
+.gsbf-preview-modal.components-modal__frame {
+	border-radius: 12px;
 }
 
 .gsbf-preview-bar {
 	display: flex;
 	align-items: center;
-	gap: 8px;
-	margin-bottom: 16px;
+	gap: 12px;
+	padding: 12px 20px;
+	border-bottom: 1px solid #e0e4e8;
 }
 
 .gsbf-preview-note {
-	margin-left: 8px;
 	font-size: 12px;
 	color: #646c73;
 }
 
 .gsbf-preview-stage {
 	display: flex;
+	flex: 1 1 auto;
 	justify-content: center;
+	overflow: auto;
 	padding: 24px 16px;
 	background: #f6f7f8;
 

@@ -1,13 +1,15 @@
 import { __, _n, sprintf } from '@wordpress/i18n';
-import { Button, SelectControl } from '@wordpress/components';
-import {
-	formatMinutes,
-	timezoneLabel,
-	weekdayShort,
-} from '../../../utils/time';
+import { Chips, SelectInput } from '../../../components/ui';
+import { formatMinutes, timezoneLabel } from '../../../utils/time';
 
 // Monday first, like the design.
 const DAY_ORDER = [ 1, 2, 3, 4, 5, 6, 0 ];
+
+const dayName = ( day ) =>
+	new Date( Date.UTC( 2023, 0, 1 + day ) ).toLocaleDateString( undefined, {
+		timeZone: 'UTC',
+		weekday: 'short',
+	} );
 
 const hourOptions = ( from, to ) => {
 	const options = [];
@@ -38,35 +40,21 @@ export default function AvailabilityPanel( { attributes, setAttributes } ) {
 
 	return (
 		<>
-			<div className="gsbf-field">
-				<span className="gsbf-field-label">
-					{ __( 'Available days', 'gembooking-simple-booking-form' ) }
-				</span>
-				<div className="gsbf-chips">
-					{ DAY_ORDER.map( ( day ) => (
-						<Button
-							key={ day }
-							variant={
-								attributes.days.includes( day )
-									? 'primary'
-									: 'secondary'
-							}
-							onClick={ () => toggleDay( day ) }
-						>
-							{ new Date(
-								Date.UTC( 2023, 0, 1 + day )
-							).toLocaleDateString( undefined, {
-								timeZone: 'UTC',
-								weekday: 'short',
-							} ) || weekdayShort( day ) }
-						</Button>
-					) ) }
-				</div>
-			</div>
+			<Chips
+				label={ __(
+					'Available days',
+					'gembooking-simple-booking-form'
+				) }
+				options={ DAY_ORDER.map( ( day ) => ( {
+					value: day,
+					label: dayName( day ),
+				} ) ) }
+				isOn={ ( day ) => attributes.days.includes( day ) }
+				onToggle={ toggleDay }
+			/>
 
 			<div className="gsbf-two">
-				<SelectControl
-					__nextHasNoMarginBottom
+				<SelectInput
 					label={ __( 'From', 'gembooking-simple-booking-form' ) }
 					value={ attributes.startHour }
 					options={ hourOptions(
@@ -77,8 +65,7 @@ export default function AvailabilityPanel( { attributes, setAttributes } ) {
 						setAttributes( { startHour: Number( value ) } )
 					}
 				/>
-				<SelectControl
-					__nextHasNoMarginBottom
+				<SelectInput
 					label={ __( 'To', 'gembooking-simple-booking-form' ) }
 					value={ attributes.endHour }
 					options={ hourOptions( attributes.startHour + 1, 24 ) }
@@ -88,8 +75,7 @@ export default function AvailabilityPanel( { attributes, setAttributes } ) {
 				/>
 			</div>
 
-			<SelectControl
-				__nextHasNoMarginBottom
+			<SelectInput
 				label={ __(
 					'Minimum notice',
 					'gembooking-simple-booking-form'
@@ -107,8 +93,7 @@ export default function AvailabilityPanel( { attributes, setAttributes } ) {
 					setAttributes( { notice: Number( value ) } )
 				}
 			/>
-			<SelectControl
-				__nextHasNoMarginBottom
+			<SelectInput
 				label={ __(
 					'Buffer between bookings',
 					'gembooking-simple-booking-form'
@@ -131,8 +116,7 @@ export default function AvailabilityPanel( { attributes, setAttributes } ) {
 					setAttributes( { buffer: Number( value ) } )
 				}
 			/>
-			<SelectControl
-				__nextHasNoMarginBottom
+			<SelectInput
 				label={ __( 'Book up to', 'gembooking-simple-booking-form' ) }
 				value={ attributes.maxAdvance }
 				options={ [
@@ -150,8 +134,7 @@ export default function AvailabilityPanel( { attributes, setAttributes } ) {
 					setAttributes( { maxAdvance: Number( value ) } )
 				}
 			/>
-			<SelectControl
-				__nextHasNoMarginBottom
+			<SelectInput
 				label={ __( 'Timezone', 'gembooking-simple-booking-form' ) }
 				value={ attributes.timezone }
 				options={ zones.map( ( zone ) => ( {

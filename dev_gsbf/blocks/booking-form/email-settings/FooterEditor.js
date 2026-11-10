@@ -1,6 +1,5 @@
 import { useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { Button } from '@wordpress/components';
 
 /**
  * Small rich-text editor for the email footer (bold, italic, underline, list,
@@ -27,40 +26,55 @@ export default function FooterEditor( { value, onChange } ) {
 		}
 	};
 
-	const tools = [
-		[ 'bold', 'B', __( 'Bold', 'gembooking-simple-booking-form' ) ],
-		[ 'italic', 'I', __( 'Italic', 'gembooking-simple-booking-form' ) ],
-		[
-			'underline',
-			'U',
-			__( 'Underline', 'gembooking-simple-booking-form' ),
-		],
-		[
-			'insertUnorderedList',
-			'•',
-			__( 'List', 'gembooking-simple-booking-form' ),
-		],
-	];
+	const tool = ( command, label, title, style, action ) => (
+		<button
+			key={ command }
+			type="button"
+			className="gsbf-tool"
+			style={ style }
+			aria-label={ title }
+			onMouseDown={ ( e ) => e.preventDefault() }
+			onClick={ action || ( () => run( command ) ) }
+		>
+			{ label }
+		</button>
+	);
 
 	return (
 		<div className="gsbf-footer-editor">
 			<div className="gsbf-footer-tools">
-				{ tools.map( ( [ command, label, title ] ) => (
-					<Button
-						key={ command }
-						size="small"
-						label={ title }
-						onMouseDown={ ( e ) => e.preventDefault() }
-						onClick={ () => run( command ) }
-					>
-						{ label }
-					</Button>
-				) ) }
-				<Button
-					size="small"
-					label={ __( 'Link', 'gembooking-simple-booking-form' ) }
-					onMouseDown={ ( e ) => e.preventDefault() }
-					onClick={ () => {
+				{ tool(
+					'bold',
+					'B',
+					__( 'Bold', 'gembooking-simple-booking-form' ),
+					{
+						fontWeight: 700,
+					}
+				) }
+				{ tool(
+					'italic',
+					'I',
+					__( 'Italic', 'gembooking-simple-booking-form' ),
+					{ fontStyle: 'italic' }
+				) }
+				{ tool(
+					'underline',
+					'U',
+					__( 'Underline', 'gembooking-simple-booking-form' ),
+					{ textDecoration: 'underline' }
+				) }
+				<span className="gsbf-tool-sep" />
+				{ tool(
+					'insertUnorderedList',
+					'•',
+					__( 'List', 'gembooking-simple-booking-form' )
+				) }
+				{ tool(
+					'createLink',
+					'↗',
+					__( 'Link', 'gembooking-simple-booking-form' ),
+					undefined,
+					() => {
 						// eslint-disable-next-line no-alert
 						const url = window.prompt(
 							__( 'Link URL', 'gembooking-simple-booking-form' ),
@@ -69,21 +83,14 @@ export default function FooterEditor( { value, onChange } ) {
 						if ( url ) {
 							run( 'createLink', url );
 						}
-					} }
-				>
-					↗
-				</Button>
-				<Button
-					size="small"
-					label={ __(
-						'Clear formatting',
-						'gembooking-simple-booking-form'
-					) }
-					onMouseDown={ ( e ) => e.preventDefault() }
-					onClick={ () => run( 'removeFormat' ) }
-				>
-					Tx
-				</Button>
+					}
+				) }
+				<span className="gsbf-tool-sep" />
+				{ tool(
+					'removeFormat',
+					'Tx',
+					__( 'Clear formatting', 'gembooking-simple-booking-form' )
+				) }
 			</div>
 			<div
 				ref={ ref }

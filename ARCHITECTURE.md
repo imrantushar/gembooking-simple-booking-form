@@ -36,7 +36,7 @@ Items marked **[OPEN]** are not decided (see §14). Items marked **[ASSUMED]** a
 
 ## 2. What it does
 
-One Gutenberg block, **GemBooking Form**. Visitor picks date → time → enters name, email, phone(optional).
+One Gutenberg block, **GemBooking Simple Booking Form**. Visitor picks date → time → enters name, email, phone(optional).
 The server validates, **stores the row**, **sends emails**. The admin confirms/declines from the email. The
 customer can view or reschedule from their email. Nothing else is user-facing.
 
@@ -150,7 +150,7 @@ Font: design's Inter replaced by the WP default stack
 
 ## 6. Block attributes & config trust
 
-`formId (uuid, regenerated if a copied block duplicates one) · title · description · layout step|single · duration
+`formId (uuid, regenerated if a copied block duplicates one) · title · layout step|single · duration
 5–480/step 5 · days[0–6] · startHour · endHour · notice · buffer · maxAdvance · timezone (IANA id) · accent ·
 phoneRequired · message`.
 

@@ -1,9 +1,10 @@
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { Button, Modal, Notice, TabPanel } from '@wordpress/components';
+import { Modal } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import SettingsTab from './SettingsTab';
 import PreviewTab from './PreviewTab';
+import { OutlineButton, PrimaryButton } from '../../../components/ui';
 
 /**
  * "Configure email" modal. Site-wide settings: they are saved to the site, not
@@ -11,6 +12,7 @@ import PreviewTab from './PreviewTab';
  */
 export default function EmailModal( { accent, setAccent, onClose, onSaved } ) {
 	const [ settings, setSettings ] = useState( null );
+	const [ tab, setTab ] = useState( 'settings' );
 	const [ busy, setBusy ] = useState( false );
 	const [ notice, setNotice ] = useState( null );
 
@@ -75,6 +77,38 @@ export default function EmailModal( { accent, setAccent, onClose, onSaved } ) {
 		}
 	};
 
+	const tabs = [
+		[ 'settings', __( 'Settings', 'gembooking-simple-booking-form' ) ],
+		[ 'admin', __( 'Admin email', 'gembooking-simple-booking-form' ) ],
+		[
+			'customer',
+			__( 'Customer email', 'gembooking-simple-booking-form' ),
+		],
+	];
+
+	let body = (
+		<p className="gsbf-modal-loading">
+			{ __( 'Loading…', 'gembooking-simple-booking-form' ) }
+		</p>
+	);
+	if ( settings ) {
+		body =
+			tab === 'settings' ? (
+				<SettingsTab
+					settings={ settings }
+					update={ update }
+					accent={ accent }
+					setAccent={ setAccent }
+				/>
+			) : (
+				<PreviewTab
+					kind={ tab }
+					settings={ settings }
+					accent={ accent }
+				/>
+			);
+	}
+
 	return (
 		<Modal
 			title={ __(
@@ -84,62 +118,37 @@ export default function EmailModal( { accent, setAccent, onClose, onSaved } ) {
 			onRequestClose={ onClose }
 			className="gsbf-email-modal"
 		>
+			<div className="gsbf-modal-tabs" role="tablist">
+				{ tabs.map( ( [ name, title ] ) => (
+					<button
+						key={ name }
+						type="button"
+						role="tab"
+						aria-selected={ tab === name }
+						className={ tab === name ? 'is-on' : '' }
+						onClick={ () => setTab( name ) }
+					>
+						{ title }
+					</button>
+				) ) }
+			</div>
+
 			{ notice && (
-				<Notice status={ notice.status } isDismissible={ false }>
+				<div
+					className={ `gsbf-notice is-${ notice.status }` }
+					role="status"
+				>
 					{ notice.text }
-				</Notice>
+				</div>
 			) }
 
-			{ ! settings ? (
-				<p>{ __( 'Loading…', 'gembooking-simple-booking-form' ) }</p>
-			) : (
-				<TabPanel
-					tabs={ [
-						{
-							name: 'settings',
-							title: __(
-								'Settings',
-								'gembooking-simple-booking-form'
-							),
-						},
-						{
-							name: 'admin',
-							title: __(
-								'Admin email',
-								'gembooking-simple-booking-form'
-							),
-						},
-						{
-							name: 'customer',
-							title: __(
-								'Customer email',
-								'gembooking-simple-booking-form'
-							),
-						},
-					] }
-				>
-					{ ( tab ) =>
-						tab.name === 'settings' ? (
-							<SettingsTab
-								settings={ settings }
-								update={ update }
-								accent={ accent }
-								setAccent={ setAccent }
-							/>
-						) : (
-							<PreviewTab
-								kind={ tab.name }
-								settings={ settings }
-								accent={ accent }
-							/>
-						)
-					}
-				</TabPanel>
-			) }
+			<div className="gsbf-modal-body" role="tabpanel">
+				{ body }
+			</div>
 
 			<div className="gsbf-modal-actions">
-				<Button
-					variant="secondary"
+				<OutlineButton
+					className="is-inline is-small"
 					onClick={ sendTest }
 					disabled={ busy || ! settings }
 				>
@@ -147,14 +156,10 @@ export default function EmailModal( { accent, setAccent, onClose, onSaved } ) {
 						'Send test email',
 						'gembooking-simple-booking-form'
 					) }
-				</Button>
-				<Button
-					variant="primary"
-					onClick={ done }
-					disabled={ busy || ! settings }
-				>
+				</OutlineButton>
+				<PrimaryButton onClick={ done } disabled={ busy || ! settings }>
 					{ __( 'Done', 'gembooking-simple-booking-form' ) }
-				</Button>
+				</PrimaryButton>
 			</div>
 		</Modal>
 	);

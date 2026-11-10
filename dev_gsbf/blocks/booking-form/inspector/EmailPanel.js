@@ -1,7 +1,7 @@
 import { useEffect, useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
-import { Button } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
+import { OutlineButton } from '../../../components/ui';
 import EmailModal from '../email-settings/EmailModal';
 
 export default function EmailPanel( { attributes, setAttributes } ) {
@@ -36,10 +36,10 @@ export default function EmailPanel( { attributes, setAttributes } ) {
 
 	return (
 		<>
-			<p className="gsbf-help">{ summary }</p>
-			<Button variant="secondary" onClick={ () => setOpen( true ) }>
+			<p className="gsbf-sb-hint is-first">{ summary }</p>
+			<OutlineButton onClick={ () => setOpen( true ) }>
 				{ __( 'Configure email', 'gembooking-simple-booking-form' ) }
-			</Button>
+			</OutlineButton>
 			{ open && (
 				<EmailModal
 					accent={ attributes.accent }

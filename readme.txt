@@ -12,7 +12,7 @@ A simple booking form block. Visitors pick a date and a time, you confirm by ema
 
 == Description ==
 
-GemBooking Simple Booking Form adds one block, **GemBooking Form**, to the block editor.
+GemBooking Simple Booking Form adds one block, **GemBooking Simple Booking Form**, to the block editor.
 
 * Visitors choose a date and a time, then enter their name, email and an optional phone number.
 * You set the event, duration, weekdays, hours, notice, buffer and timezone right in the block sidebar.
@@ -34,7 +34,7 @@ Bookings store the name, email and optional phone number of the person who booke
 == Installation ==
 
 1. Upload the plugin to `/wp-content/plugins/` and activate it.
-2. Edit a page and add the **GemBooking Form** block.
+2. Edit a page and add the **GemBooking Simple Booking Form** block.
 3. Set the availability in the block sidebar, then open **Email notifications > Configure email** to set the address that receives booking requests.
 
 == Frequently Asked Questions ==

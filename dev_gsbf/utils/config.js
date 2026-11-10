@@ -5,7 +5,6 @@
 export const DEFAULTS = {
 	formId: '',
 	title: '30-minute consultation',
-	description: 'A short call to talk through your project and next steps.',
 	layout: 'step',
 	duration: 30,
 	days: [ 1, 2, 3, 4, 5 ],

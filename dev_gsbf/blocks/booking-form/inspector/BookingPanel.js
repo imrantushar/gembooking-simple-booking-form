@@ -1,12 +1,12 @@
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { Button, TextControl, TextareaControl } from '@wordpress/components';
 import { DURATION_PRESETS, clamp } from '../../../utils/config';
+import { Segmented, TextInput } from '../../../components/ui';
 
 export default function BookingPanel( { attributes, setAttributes } ) {
-	const isCustomValue = ! DURATION_PRESETS.includes( attributes.duration );
 	const [ customMode, setCustomMode ] = useState( false );
-	const custom = customMode || isCustomValue;
+	const isCustom =
+		customMode || ! DURATION_PRESETS.includes( attributes.duration );
 
 	const setDuration = ( value ) => {
 		const rounded = Math.round( Number( value ) / 5 ) * 5;
@@ -18,98 +18,74 @@ export default function BookingPanel( { attributes, setAttributes } ) {
 
 	return (
 		<>
-			<TextControl
-				__nextHasNoMarginBottom
+			<TextInput
 				label={ __( 'Event title', 'gembooking-simple-booking-form' ) }
 				value={ attributes.title }
-				onChange={ ( title ) => setAttributes( { title } ) }
-			/>
-			<TextareaControl
-				__nextHasNoMarginBottom
-				label={ __( 'Description', 'gembooking-simple-booking-form' ) }
-				value={ attributes.description }
-				onChange={ ( description ) => setAttributes( { description } ) }
-				rows={ 3 }
+				onChange={ ( e ) => setAttributes( { title: e.target.value } ) }
 			/>
 
-			<div className="gsbf-field">
-				<span className="gsbf-field-label">
-					{ __( 'Form layout', 'gembooking-simple-booking-form' ) }
-				</span>
-				<div className="gsbf-chips">
-					{ [
-						[
-							'step',
-							__(
-								'Step by step',
-								'gembooking-simple-booking-form'
-							),
-						],
-						[
-							'single',
-							__(
-								'One at a time',
-								'gembooking-simple-booking-form'
-							),
-						],
-					].map( ( [ value, label ] ) => (
-						<Button
-							key={ value }
-							variant={
-								attributes.layout === value
-									? 'primary'
-									: 'secondary'
-							}
-							onClick={ () => setAttributes( { layout: value } ) }
-						>
-							{ label }
-						</Button>
-					) ) }
-				</div>
-			</div>
+			<Segmented
+				label={ __( 'Form layout', 'gembooking-simple-booking-form' ) }
+				value={ attributes.layout }
+				options={ [
+					{
+						value: 'step',
+						label: __(
+							'Step by step',
+							'gembooking-simple-booking-form'
+						),
+					},
+					{
+						value: 'single',
+						label: __(
+							'One at a time',
+							'gembooking-simple-booking-form'
+						),
+					},
+				] }
+				onChange={ ( layout ) => setAttributes( { layout } ) }
+			/>
 
-			<div className="gsbf-field">
-				<span className="gsbf-field-label">
-					{ __( 'Duration', 'gembooking-simple-booking-form' ) }
-				</span>
-				<div className="gsbf-chips">
-					{ DURATION_PRESETS.map( ( minutes ) => (
-						<Button
-							key={ minutes }
-							variant={
-								! custom && attributes.duration === minutes
-									? 'primary'
-									: 'secondary'
-							}
-							onClick={ () => {
-								setCustomMode( false );
-								setDuration( minutes );
-							} }
-						>
-							{ minutes }m
-						</Button>
-					) ) }
-					<Button
-						variant={ custom ? 'primary' : 'secondary' }
-						onClick={ () => setCustomMode( true ) }
-					>
-						{ __( 'Custom', 'gembooking-simple-booking-form' ) }
-					</Button>
-				</div>
-			</div>
-			{ custom && (
-				<TextControl
-					__nextHasNoMarginBottom
+			<Segmented
+				className="is-duration"
+				label={ __( 'Duration', 'gembooking-simple-booking-form' ) }
+				value={ isCustom ? 'custom' : attributes.duration }
+				options={ [
+					...DURATION_PRESETS.map( ( minutes ) => ( {
+						value: minutes,
+						label: `${ minutes }m`,
+					} ) ),
+					{
+						value: 'custom',
+						label: __( 'Custom', 'gembooking-simple-booking-form' ),
+					},
+				] }
+				onChange={ ( value ) => {
+					if ( value === 'custom' ) {
+						setCustomMode( true );
+						return;
+					}
+					setCustomMode( false );
+					setDuration( value );
+				} }
+			/>
+
+			{ isCustom && (
+				<TextInput
 					type="number"
 					min={ 5 }
 					max={ 480 }
 					step={ 5 }
 					label={ __(
-						'Custom duration (minutes)',
+						'Custom duration',
+						'gembooking-simple-booking-form'
+					) }
+					aria-label={ __(
+						'Custom duration in minutes',
 						'gembooking-simple-booking-form'
 					) }
 					value={ attributes.duration }
-					onChange={ setDuration }
+					onChange={ ( e ) => setDuration( e.target.value ) }
 				/>
 			) }
 		</>
