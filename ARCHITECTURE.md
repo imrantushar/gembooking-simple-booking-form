@@ -152,7 +152,7 @@ Font: design's Inter replaced by the WP default stack
 
 `formId (uuid, regenerated if a copied block duplicates one) · title · layout step|single · duration
 5–480/step 5 · days[0–6] · startHour · endHour · notice · buffer · maxAdvance · timezone (IANA id) · accent ·
-phoneRequired · message`.
+phoneRequired`.
 
 `Classes\Config::sanitize()` clamps every field (JS mirrors it). With no stored config, `Render\Form` prints the
 sanitized config + `page_url` (the permalink of the page being rendered, server-determined) + `sig =
@@ -203,7 +203,9 @@ form timezone; slots from `startHour`, step `duration+buffer`, `slot+duration �
 `DateTimeImmutable`), then rows with `pending|confirmed` in that range mark slots unavailable (greyed out).
 
 **Create** — `POST /bookings {config,sig,start,name,email,phone?,hp,t}` → verify sig → sanitize → `SpamGuard`
-(honeypot, min fill time, rate limit) → `start` must be a free real slot → INSERT (409 on duplicate) →
+(honeypot, min fill time, rate limit; the honeypot input is `display:none`, not just off-screen, because form-filling
+browser extensions skip undisplayed fields but fill an off-screen one, which made real submissions look like spam)
+→ `start` must be a free real slot → INSERT (409 on duplicate) →
 `manual`: status `pending`, email **admin** (details + Confirm/Decline) and email the **customer** a "We received
 your booking request" mail that says the booking is still pending (with View / Reschedule / Cancel; the host's
 confirmation follows in a second mail) · `auto`: status `confirmed`, email

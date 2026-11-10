@@ -16,8 +16,6 @@ export const DEFAULTS = {
 	timezone: 'UTC',
 	accent: '#141A24',
 	phoneRequired: false,
-	message:
-		'A confirmation email is on its way. We look forward to speaking with you.',
 };
 
 export const ACCENT_SWATCHES = [

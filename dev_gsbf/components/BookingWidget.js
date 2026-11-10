@@ -562,7 +562,10 @@ export default function BookingWidget( { config, api, entry = null } ) {
 						),
 						first || __( 'there', 'gembooking-simple-booking-form' )
 					)
-				: config.message;
+				: __(
+						'Your booking is confirmed. We look forward to speaking with you.',
+						'gembooking-simple-booking-form'
+					);
 		}
 
 		return (

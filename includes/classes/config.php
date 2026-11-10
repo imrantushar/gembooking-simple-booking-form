@@ -33,7 +33,6 @@ class Config {
 			'timezone'      => 'UTC',
 			'accent'        => '#141A24',
 			'phoneRequired' => false,
-			'message'       => 'A confirmation email is on its way. We look forward to speaking with you.',
 		];
 	}
 
@@ -90,7 +89,6 @@ class Config {
 			'timezone'      => $timezone,
 			'accent'        => $accent ? strtoupper( $accent ) : $d['accent'],
 			'phoneRequired' => ! empty( $raw['phoneRequired'] ) && 'false' !== $raw['phoneRequired'],
-			'message'       => self::truncate( sanitize_textarea_field( (string) ( $raw['message'] ?? $d['message'] ) ), 400 ),
 		];
 	}
 

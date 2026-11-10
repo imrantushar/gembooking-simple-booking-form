@@ -21,8 +21,7 @@
     "maxAdvance": { "type": "number", "default": 60 },
     "timezone": { "type": "string", "default": "" },
     "accent": { "type": "string", "default": "#141A24" },
-    "phoneRequired": { "type": "boolean", "default": false },
-    "message": { "type": "string", "default": "A confirmation email is on its way. We look forward to speaking with you." }
+    "phoneRequired": { "type": "boolean", "default": false }
   },
   "supports": {
     "html": false,

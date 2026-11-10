@@ -476,13 +476,12 @@
 	}
 }
 
-// Honeypot: invisible to people, tempting to bots.
+// Honeypot: invisible to people, tempting to bots. It is display:none (not
+// just moved off-screen) because form-filling browser extensions skip fields
+// that are not displayed but fill an off-screen one, which made real test
+// submissions look like spam.
 .gsbf-hp {
-	position: absolute;
-	left: -9999px;
-	width: 1px;
-	height: 1px;
-	overflow: hidden;
+	display: none;
 }
 
 /* ---- done step ---------------------------------------------------------- */
