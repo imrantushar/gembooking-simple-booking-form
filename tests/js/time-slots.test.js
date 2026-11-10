@@ -55,3 +55,14 @@ describe( 'slot rules (port of SlotCalendar)', () => {
 		expect( slots[ 15 ].minutes ).toBe( 990 );
 	} );
 } );
+
+describe( 'whole-number input', () => {
+	it( 'accepts only digits, so decimals, exponents and signs are rejected', async () => {
+		const { isDigits } = await import( '../../dev_gsbf/utils/validate' );
+		expect( isDigits( '' ) ).toBe( true );
+		expect( isDigits( '20' ) ).toBe( true );
+		[ '1.5', '1,5', '1e3', '-5', '+5', '2.0', 'abc', ' 5' ].forEach(
+			( bad ) => expect( isDigits( bad ) ).toBe( false )
+		);
+	} );
+} );

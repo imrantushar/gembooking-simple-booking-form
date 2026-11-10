@@ -4,7 +4,9 @@
  * controls so borders, radii and the black primary color match the design.
  */
 
+import { useEffect, useRef, useState } from '@wordpress/element';
 import { useInstanceId } from '@wordpress/compose';
+import { isDigits } from '../../utils/validate';
 
 export function Field( { label, hint, htmlFor, children } ) {
 	return (
@@ -73,6 +75,99 @@ export function TextAreaInput( { label, hint, ...props } ) {
 			<textarea
 				id={ id }
 				className="gsbf-sb-input is-textarea"
+				{ ...props }
+			/>
+		</Field>
+	);
+}
+
+/**
+ * A number field that only ever holds a whole number: no decimals, no
+ * exponent, no sign. Typing, pasting and dropping text with anything but
+ * digits is ignored. A valid value inside [min, max] is applied while typing;
+ * on blur an out-of-range value is brought back inside the range.
+ *
+ * `normalize` (optional) maps a typed whole number to the value to store,
+ * for example rounding a duration to 5 minutes.
+ */
+export function NumberInput( {
+	label,
+	hint,
+	value,
+	min,
+	max,
+	normalize,
+	onChange,
+	size,
+	...props
+} ) {
+	const id = useInstanceId( NumberInput, 'gsbf-number' );
+	const [ text, setText ] = useState( String( value ) );
+	const typing = useRef( false );
+
+	// Follow outside changes (e.g. a preset was chosen), but never while typing.
+	useEffect( () => {
+		if ( ! typing.current ) {
+			setText( String( value ) );
+		}
+	}, [ value ] );
+
+	const store = ( n ) => {
+		const next = normalize
+			? normalize( n )
+			: Math.min( max, Math.max( min, n ) );
+		onChange( next );
+		return next;
+	};
+
+	const change = ( raw ) => {
+		if ( ! isDigits( raw ) ) {
+			return; // Decimal point, exponent, sign or letters: not a whole number.
+		}
+		setText( raw );
+		if ( raw === '' ) {
+			return;
+		}
+		const n = parseInt( raw, 10 );
+		if ( n >= min && n <= max ) {
+			store( n );
+		}
+	};
+
+	const blur = () => {
+		typing.current = false;
+		const n = text === '' ? NaN : parseInt( text, 10 );
+		// Only store when the person changed it; opening the field must not alter the value.
+		const next = Number.isNaN( n ) || n === value ? value : store( n );
+		setText( String( next ) );
+	};
+
+	return (
+		<Field label={ label } hint={ hint } htmlFor={ id }>
+			<input
+				id={ id }
+				className={ `gsbf-sb-input${ size === 'lg' ? ' is-lg' : '' }` }
+				type="number"
+				inputMode="numeric"
+				pattern="[0-9]*"
+				min={ min }
+				max={ max }
+				step={ 1 }
+				value={ text }
+				onFocus={ () => {
+					typing.current = true;
+				} }
+				onBlur={ blur }
+				onKeyDown={ ( e ) => {
+					if ( [ '.', ',', 'e', 'E', '+', '-' ].includes( e.key ) ) {
+						e.preventDefault();
+					}
+				} }
+				onPaste={ ( e ) => {
+					e.preventDefault();
+					change( e.clipboardData.getData( 'text' ).trim() );
+				} }
+				onChange={ ( e ) => change( e.target.value ) }
 				{ ...props }
 			/>
 		</Field>

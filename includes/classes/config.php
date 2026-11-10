@@ -50,12 +50,14 @@ class Config {
 
 		$layout = (string) ( $raw['layout'] ?? $d['layout'] );
 
-		$duration = (int) round( (int) ( $raw['duration'] ?? $d['duration'] ) / 5 ) * 5;
+		// Every numeric option is a whole number; anything else (30.5, "abc") falls back
+		// to the default instead of being truncated or rounded into a different value.
+		$duration = (int) round( self::whole( $raw['duration'] ?? null, $d['duration'] ) / 5 ) * 5;
 		$duration = min( 480, max( 5, $duration ) );
 
 		$days = [];
 		foreach ( (array) ( $raw['days'] ?? $d['days'] ) as $day ) {
-			$day = (int) $day;
+			$day = self::whole( $day, -1 );
 			if ( $day >= 0 && $day <= 6 ) {
 				$days[ $day ] = $day;
 			}
@@ -63,10 +65,11 @@ class Config {
 		$days = array_values( $days );
 		sort( $days );
 
-		$start = min( 23, max( 0, (int) ( $raw['startHour'] ?? $d['startHour'] ) ) );
-		$end   = min( 24, max( $start + 1, (int) ( $raw['endHour'] ?? $d['endHour'] ) ) );
+		$start = min( 23, max( 0, self::whole( $raw['startHour'] ?? null, $d['startHour'] ) ) );
+		$end   = min( 24, max( $start + 1, self::whole( $raw['endHour'] ?? null, $d['endHour'] ) ) );
 
-		$buffer = (int) round( (int) ( $raw['buffer'] ?? $d['buffer'] ) / 5 ) * 5;
+		// Buffer is any whole number of minutes (the "Custom" option), not only multiples of 5.
+		$buffer = min( 240, max( 0, self::whole( $raw['buffer'] ?? null, $d['buffer'] ) ) );
 
 		$timezone = (string) ( $raw['timezone'] ?? '' );
 		if ( ! in_array( $timezone, \DateTimeZone::listIdentifiers(), true ) ) {
@@ -83,13 +86,38 @@ class Config {
 			'days'          => $days,
 			'startHour'     => $start,
 			'endHour'       => $end,
-			'notice'        => min( 30, max( 0, (int) ( $raw['notice'] ?? $d['notice'] ) ) ),
-			'buffer'        => min( 120, max( 0, $buffer ) ),
-			'maxAdvance'    => min( 365, max( 1, (int) ( $raw['maxAdvance'] ?? $d['maxAdvance'] ) ) ),
+			'notice'        => min( 30, max( 0, self::whole( $raw['notice'] ?? null, $d['notice'] ) ) ),
+			'buffer'        => $buffer,
+			'maxAdvance'    => min( 365, max( 1, self::whole( $raw['maxAdvance'] ?? null, $d['maxAdvance'] ) ) ),
 			'timezone'      => $timezone,
 			'accent'        => $accent ? strtoupper( $accent ) : $d['accent'],
 			'phoneRequired' => ! empty( $raw['phoneRequired'] ) && 'false' !== $raw['phoneRequired'],
 		];
+	}
+
+	/**
+	 * A whole number, or the default.
+	 *
+	 * Accepts ints, floats that are exactly whole (30.0) and integer-looking strings
+	 * ("30"). Floats with a fraction (30.5), empty values and text are not whole
+	 * numbers and give the default.
+	 *
+	 * @param mixed $value   Raw value.
+	 * @param int   $default Value to use when $value is not a whole number.
+	 * @return int
+	 */
+	private static function whole( $value, int $default ): int {
+		if ( is_int( $value ) ) {
+			return $value;
+		}
+		if ( is_float( $value ) && is_finite( $value ) && floor( $value ) === $value ) {
+			return (int) $value;
+		}
+		if ( is_string( $value ) && preg_match( '/^-?\d+$/', trim( $value ) ) ) {
+			return (int) trim( $value );
+		}
+
+		return $default;
 	}
 
 	private static function truncate( string $value, int $length ): string {

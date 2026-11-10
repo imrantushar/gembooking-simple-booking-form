@@ -26,6 +26,15 @@ export const ACCENT_SWATCHES = [
 ];
 
 export const DURATION_PRESETS = [ 15, 30, 45, 60 ];
+export const BUFFER_PRESETS = [ 0, 5, 10, 15 ];
+export const ADVANCE_PRESETS = [ 14, 30, 60 ];
+
+// Whole-number limits, the same as Config::sanitize() on the server.
+export const LIMITS = {
+	duration: [ 5, 480 ],
+	buffer: [ 1, 240 ],
+	maxAdvance: [ 1, 365 ],
+};
 
 export function uuid() {
 	if ( window.crypto && window.crypto.randomUUID ) {

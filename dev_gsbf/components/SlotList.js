@@ -50,14 +50,6 @@ export default function SlotList( {
 							onClick={ () => onPick( slot ) }
 						>
 							{ formatMinutes( slot.minutes, h24 ) }
-							{ slot.current && (
-								<span className="gsbf-slot-badge">
-									{ __(
-										'Current',
-										'gembooking-simple-booking-form'
-									) }
-								</span>
-							) }
 						</button>
 					);
 				} ) }

@@ -1,5 +1,7 @@
+import { useState } from '@wordpress/element';
 import { __, _n, sprintf } from '@wordpress/i18n';
-import { Chips, SelectInput } from '../../../components/ui';
+import { Chips, NumberInput, SelectInput } from '../../../components/ui';
+import { ADVANCE_PRESETS, BUFFER_PRESETS, LIMITS } from '../../../utils/config';
 import { formatMinutes, timezoneLabel } from '../../../utils/time';
 
 // Monday first, like the design.
@@ -30,6 +32,14 @@ export default function AvailabilityPanel( { attributes, setAttributes } ) {
 	const zones = ( window.GsbfGlobal && window.GsbfGlobal.timezones ) || [
 		attributes.timezone,
 	];
+
+	// "Custom" is shown when chosen, or when the saved value is not one of the presets.
+	const [ bufferCustom, setBufferCustom ] = useState( false );
+	const [ advanceCustom, setAdvanceCustom ] = useState( false );
+	const bufferIsCustom =
+		bufferCustom || ! BUFFER_PRESETS.includes( attributes.buffer );
+	const advanceIsCustom =
+		advanceCustom || ! ADVANCE_PRESETS.includes( attributes.maxAdvance );
 
 	const toggleDay = ( day ) => {
 		const next = attributes.days.includes( day )
@@ -98,27 +108,54 @@ export default function AvailabilityPanel( { attributes, setAttributes } ) {
 					'Buffer between bookings',
 					'gembooking-simple-booking-form'
 				) }
-				value={ attributes.buffer }
-				options={ [ 0, 5, 10, 15 ].map( ( v ) => ( {
-					value: v,
-					label: v
-						? sprintf(
-								/* translators: %d: minutes */
-								__(
-									'%d min',
-									'gembooking-simple-booking-form'
-								),
-								v
-							)
-						: __( 'None', 'gembooking-simple-booking-form' ),
-				} ) ) }
-				onChange={ ( value ) =>
-					setAttributes( { buffer: Number( value ) } )
-				}
+				value={ bufferIsCustom ? 'custom' : attributes.buffer }
+				options={ [
+					...BUFFER_PRESETS.map( ( v ) => ( {
+						value: v,
+						label: v
+							? sprintf(
+									/* translators: %d: minutes */
+									__(
+										'%d min',
+										'gembooking-simple-booking-form'
+									),
+									v
+								)
+							: __( 'None', 'gembooking-simple-booking-form' ),
+					} ) ),
+					{
+						value: 'custom',
+						label: __( 'Custom', 'gembooking-simple-booking-form' ),
+					},
+				] }
+				onChange={ ( value ) => {
+					if ( value === 'custom' ) {
+						setBufferCustom( true );
+						return;
+					}
+					setBufferCustom( false );
+					setAttributes( { buffer: Number( value ) } );
+				} }
 			/>
+			{ bufferIsCustom && (
+				<NumberInput
+					label={ __(
+						'Custom buffer (minutes)',
+						'gembooking-simple-booking-form'
+					) }
+					hint={ __(
+						'Whole minutes, from 1 to 240.',
+						'gembooking-simple-booking-form'
+					) }
+					min={ LIMITS.buffer[ 0 ] }
+					max={ LIMITS.buffer[ 1 ] }
+					value={ attributes.buffer }
+					onChange={ ( buffer ) => setAttributes( { buffer } ) }
+				/>
+			) }
 			<SelectInput
 				label={ __( 'Book up to', 'gembooking-simple-booking-form' ) }
-				value={ attributes.maxAdvance }
+				value={ advanceIsCustom ? 'custom' : attributes.maxAdvance }
 				options={ [
 					{
 						value: 14,
@@ -129,11 +166,38 @@ export default function AvailabilityPanel( { attributes, setAttributes } ) {
 					},
 					{ value: 30, label: days( 30 ) },
 					{ value: 60, label: days( 60 ) },
+					{
+						value: 'custom',
+						label: __( 'Custom', 'gembooking-simple-booking-form' ),
+					},
 				] }
-				onChange={ ( value ) =>
-					setAttributes( { maxAdvance: Number( value ) } )
-				}
+				onChange={ ( value ) => {
+					if ( value === 'custom' ) {
+						setAdvanceCustom( true );
+						return;
+					}
+					setAdvanceCustom( false );
+					setAttributes( { maxAdvance: Number( value ) } );
+				} }
 			/>
+			{ advanceIsCustom && (
+				<NumberInput
+					label={ __(
+						'Custom days ahead',
+						'gembooking-simple-booking-form'
+					) }
+					hint={ __(
+						'Whole days, from 1 to 365.',
+						'gembooking-simple-booking-form'
+					) }
+					min={ LIMITS.maxAdvance[ 0 ] }
+					max={ LIMITS.maxAdvance[ 1 ] }
+					value={ attributes.maxAdvance }
+					onChange={ ( maxAdvance ) =>
+						setAttributes( { maxAdvance } )
+					}
+				/>
+			) }
 			<SelectInput
 				label={ __( 'Timezone', 'gembooking-simple-booking-form' ) }
 				value={ attributes.timezone }

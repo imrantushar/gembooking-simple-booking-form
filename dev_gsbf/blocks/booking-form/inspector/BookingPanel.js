@@ -1,7 +1,7 @@
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { DURATION_PRESETS, clamp } from '../../../utils/config';
-import { Segmented, TextInput } from '../../../components/ui';
+import { DURATION_PRESETS, LIMITS, clamp } from '../../../utils/config';
+import { NumberInput, Segmented, TextInput } from '../../../components/ui';
 
 export default function BookingPanel( { attributes, setAttributes } ) {
 	const [ customMode, setCustomMode ] = useState( false );
@@ -9,11 +9,9 @@ export default function BookingPanel( { attributes, setAttributes } ) {
 		customMode || ! DURATION_PRESETS.includes( attributes.duration );
 
 	const setDuration = ( value ) => {
-		const rounded = Math.round( Number( value ) / 5 ) * 5;
-		if ( ! rounded ) {
-			return;
-		}
-		setAttributes( { duration: clamp( rounded, 5, 480 ) } );
+		setAttributes( {
+			duration: clamp( Math.round( Number( value ) / 5 ) * 5, 5, 480 ),
+		} );
 	};
 
 	return (
@@ -71,21 +69,26 @@ export default function BookingPanel( { attributes, setAttributes } ) {
 			/>
 
 			{ isCustom && (
-				<TextInput
-					type="number"
-					min={ 5 }
-					max={ 480 }
-					step={ 5 }
+				<NumberInput
 					label={ __(
-						'Custom duration',
+						'Custom duration (minutes)',
 						'gembooking-simple-booking-form'
 					) }
-					aria-label={ __(
-						'Custom duration in minutes',
+					hint={ __(
+						'Whole minutes in steps of 5, from 5 to 480.',
 						'gembooking-simple-booking-form'
 					) }
+					min={ LIMITS.duration[ 0 ] }
+					max={ LIMITS.duration[ 1 ] }
+					normalize={ ( n ) =>
+						clamp(
+							Math.round( n / 5 ) * 5,
+							LIMITS.duration[ 0 ],
+							LIMITS.duration[ 1 ]
+						)
+					}
 					value={ attributes.duration }
-					onChange={ ( e ) => setDuration( e.target.value ) }
+					onChange={ ( duration ) => setAttributes( { duration } ) }
 				/>
 			) }
 		</>

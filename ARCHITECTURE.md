@@ -154,7 +154,12 @@ Font: design's Inter replaced by the WP default stack
 5–480/step 5 · days[0–6] · startHour · endHour · notice · buffer · maxAdvance · timezone (IANA id) · accent ·
 phoneRequired`.
 
-`Classes\Config::sanitize()` clamps every field (JS mirrors it). With no stored config, `Render\Form` prints the
+`Classes\Config::sanitize()` clamps every field (JS mirrors it). **All numeric options are whole numbers**: the
+sidebar's number fields ignore ".", ",", "e", "+", "-" (typing, paste and drop) and the server treats a
+fractional or non-numeric value as invalid and uses the default instead of truncating it (block.json declares
+them as `integer`). **Buffer** offers None / 5 / 10 / 15 min / **Custom** (any whole minute, 1-240); **Book up to**
+offers 2 weeks / 30 days / 60 days / **Custom** (any whole number of days, 1-365); a custom duration is a whole
+number of minutes rounded to 5 (5-480). Choosing *Custom* reveals a number field under the select. With no stored config, `Render\Form` prints the
 sanitized config + `page_url` (the permalink of the page being rendered, server-determined) + `sig =
 HMAC-SHA256(json, wp_salt('auth'))` on the mount. Every REST call sends both; `ConfigSigner::verify()` rejects
 tampering, so visitors cannot book outside configured hours. Works in posts, templates, patterns, widgets.
