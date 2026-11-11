@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $variants = [
 	'primary'   => 'background:' . $accent . ';border:1px solid ' . $accent . ';color:#ffffff;',
 	'secondary' => 'background:#ffffff;border:1px solid #E0E4E8;color:#141A24;',
-	'link'      => 'background:#ffffff;border:1px solid transparent;color:#434A51;',
+	'link'      => 'background:#ffffff;border:1px solid #E0E4E8;color:#434A51;',
 ];
 ?>
 <!DOCTYPE html>
