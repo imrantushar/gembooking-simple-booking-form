@@ -31,32 +31,61 @@ class ActionPage {
 	public static function init(): void {
 		$self = new self();
 		add_action( 'template_redirect', [ $self, 'maybe_render' ], 1 );
+		add_filter( 'wp_headers', [ $self, 'headers' ] );
+	}
+
+	/**
+	 * Response headers for the action page, added through WordPress's own
+	 * `wp_headers` filter.
+	 *
+	 * @param array $headers Headers WordPress is about to send.
+	 * @return array
+	 */
+	public function headers( $headers ): array {
+		$headers = is_array( $headers ) ? $headers : [];
+
+		if ( '' === self::requested_action() ) {
+			return $headers;
+		}
+
+		return array_merge(
+			$headers,
+			wp_get_nocache_headers(),
+			[
+				'X-Robots-Tag'    => 'noindex, nofollow',
+				'X-Frame-Options' => 'DENY', // The page holds a one-click action; never allow framing.
+				'Referrer-Policy' => 'no-referrer', // The URL carries a token.
+			]
+		);
+	}
+
+	/**
+	 * The confirm/decline/cancel action asked for in the URL, or '' when this
+	 * is not an action-page request.
+	 */
+	private static function requested_action(): string {
+		// The signed token is the authorisation, so there is no nonce here.
+		// phpcs:ignore WordPress.Security.NonceVerification
+		$action = isset( $_GET[ BookingActionUrl::QUERY_ACTION ] ) ? sanitize_key( wp_unslash( $_GET[ BookingActionUrl::QUERY_ACTION ] ) ) : '';
+
+		return in_array( $action, self::ACTIONS, true ) ? $action : '';
 	}
 
 	public function maybe_render(): void {
+		$action = self::requested_action();
+		if ( '' === $action ) {
+			return; // Not an action link; view / reschedule are handled by the booking form itself.
+		}
+
 		// The signed token is the authorisation, so there is no nonce here.
 		// phpcs:disable WordPress.Security.NonceVerification
-		if ( ! isset( $_GET[ BookingActionUrl::QUERY_ACTION ] ) ) {
-			return;
-		}
-
-		$action = sanitize_key( wp_unslash( $_GET[ BookingActionUrl::QUERY_ACTION ] ) );
-		if ( ! in_array( $action, self::ACTIONS, true ) ) {
-			return; // view / reschedule are handled by the booking form itself.
-		}
-
 		$id    = isset( $_GET[ BookingActionUrl::QUERY_BOOKING ] ) ? absint( $_GET[ BookingActionUrl::QUERY_BOOKING ] ) : 0;
 		$token = isset( $_GET[ BookingActionUrl::QUERY_TOKEN ] ) ? sanitize_text_field( wp_unslash( $_GET[ BookingActionUrl::QUERY_TOKEN ] ) ) : '';
 		$post  = isset( $_SERVER['REQUEST_METHOD'] ) && 'POST' === $_SERVER['REQUEST_METHOD'] && isset( $_POST['gsbf_do'] );
 		// phpcs:enable WordPress.Security.NonceVerification
 
-		nocache_headers();
-		header( 'X-Robots-Tag: noindex, nofollow' );
-		header( 'X-Frame-Options: DENY' ); // The page holds a one-click action; never allow framing.
-		header( 'Referrer-Policy: no-referrer' ); // The URL carries a token.
-
 		if ( ! BookingToken::verify( $id, $token, $action ) ) {
-			$this->render( 'error', $action, null, __( 'This link is invalid or has expired.', 'gembooking-simple-booking-form' ), 403 );
+			$this->render( 'error', $action, null, __( 'This link is invalid or has expired.', 'gembooking-simple-booking-form' ) );
 		}
 
 		$booking = BookingRepository::find( $id );
@@ -65,18 +94,18 @@ class ActionPage {
 			$message = 'cancel' === $action
 				? __( 'This booking no longer exists. It may already be cancelled.', 'gembooking-simple-booking-form' )
 				: __( 'This request was already handled, cancelled or has expired. Nothing more to do.', 'gembooking-simple-booking-form' );
-			$this->render( 'info', $action, $booking, $message, 200 );
+			$this->render( 'info', $action, $booking, $message );
 		}
 
 		if ( $post ) {
 			$result = $this->execute( $action, $id );
 			if ( is_wp_error( $result ) ) {
-				$this->render( 'info', $action, $booking, $result->get_error_message(), 200 );
+				$this->render( 'info', $action, $booking, $result->get_error_message() );
 			}
-			$this->render( 'done', $action, $booking, $this->done_message( $action ), 200 );
+			$this->render( 'done', $action, $booking, $this->done_message( $action ) );
 		}
 
-		$this->render( 'confirm', $action, $booking, '', 200 );
+		$this->render( 'confirm', $action, $booking, '' );
 	}
 
 	/**
@@ -113,11 +142,8 @@ class ActionPage {
 	 * @param string     $action  confirm|decline|cancel.
 	 * @param array|null $row     Booking row, when known.
 	 * @param string     $message Message to show (done/info/error).
-	 * @param int        $status  HTTP status.
 	 */
-	private function render( string $state, string $action, ?array $row, string $message, int $status ): void {
-		status_header( $status );
-
+	private function render( string $state, string $action, ?array $row, string $message ): void {
 		// The template receives the *public* fields as $booking. The parameter above
 		// is deliberately not called $booking: extract() would skip a name that is
 		// already defined and the template would see the raw database row.

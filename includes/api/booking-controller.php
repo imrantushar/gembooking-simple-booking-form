@@ -197,7 +197,7 @@ class BookingController {
 
 	private function respond( array $booking, int $status ): WP_REST_Response {
 		$response = new WP_REST_Response( BookingService::to_public( $booking ), $status );
-		$response->header( 'Cache-Control', 'no-store' );
+		$response->set_headers( [ 'Cache-Control' => 'no-store' ] );
 
 		return $response;
 	}

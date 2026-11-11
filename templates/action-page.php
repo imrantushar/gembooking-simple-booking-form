@@ -51,6 +51,7 @@ if ( $booking ) {
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
 <title><?php echo esc_html( $heading ); ?></title>
 <style>
 	body{margin:0;background:#F6F7F8;color:#141A24;font-family:<?php echo esc_html( $font ); ?>;font-size:14px;line-height:1.5}

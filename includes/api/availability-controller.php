@@ -78,7 +78,7 @@ class AvailabilityController {
 		}
 
 		$response = new WP_REST_Response( $data );
-		$response->header( 'Cache-Control', 'no-store' );
+		$response->set_headers( [ 'Cache-Control' => 'no-store' ] );
 
 		return $response;
 	}
