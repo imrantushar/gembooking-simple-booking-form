@@ -280,11 +280,6 @@ class BookingService {
 		return $slot;
 	}
 
-	/**
-	 * @param array $config Verified config.
-	 * @param array $input  Raw name/email/phone.
-	 * @return array{name:string,email:string,phone:string}|WP_Error
-	 */
 	private static function validate_customer( array $config, array $input ) {
 		$name  = trim( sanitize_text_field( (string) ( $input['name'] ?? '' ) ) );
 		$email = sanitize_email( (string) ( $input['email'] ?? '' ) );

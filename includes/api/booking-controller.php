@@ -119,10 +119,6 @@ class BookingController {
 		);
 	}
 
-	/**
-	 * @param WP_REST_Request $request Request.
-	 * @return WP_REST_Response|WP_Error
-	 */
 	public function create( WP_REST_Request $request ) {
 		$verified = RequestConfig::verify( $request );
 		if ( is_wp_error( $verified ) ) {
@@ -152,10 +148,6 @@ class BookingController {
 		return $this->respond( $booking, 201 );
 	}
 
-	/**
-	 * @param WP_REST_Request $request Request.
-	 * @return WP_REST_Response|WP_Error
-	 */
 	public function get_one( WP_REST_Request $request ) {
 		$id = (int) $request->get_param( 'id' );
 
@@ -171,10 +163,6 @@ class BookingController {
 		return $this->respond( $booking, 200 );
 	}
 
-	/**
-	 * @param WP_REST_Request $request Request.
-	 * @return WP_REST_Response|WP_Error
-	 */
 	public function reschedule( WP_REST_Request $request ) {
 		$id = (int) $request->get_param( 'id' );
 

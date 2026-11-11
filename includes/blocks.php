@@ -55,10 +55,6 @@ class Blocks {
 		);
 	}
 
-	/**
-	 * @param array $attributes Block attributes.
-	 * @return string
-	 */
 	public function render_booking_form( $attributes ): string {
 		return Render\Form::html( is_array( $attributes ) ? $attributes : [] );
 	}

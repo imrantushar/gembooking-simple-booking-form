@@ -17,10 +17,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Form {
 
-	/**
-	 * @param array $attributes Block attributes.
-	 * @return string
-	 */
 	public static function html( array $attributes ): string {
 		$config   = Config::sanitize( $attributes );
 		$page_url = self::page_url();

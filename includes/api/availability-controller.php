@@ -44,10 +44,6 @@ class AvailabilityController {
 		);
 	}
 
-	/**
-	 * @param WP_REST_Request $request Request.
-	 * @return WP_REST_Response|WP_Error
-	 */
 	public function get_availability( WP_REST_Request $request ) {
 		$verified = RequestConfig::verify( $request );
 		if ( is_wp_error( $verified ) ) {

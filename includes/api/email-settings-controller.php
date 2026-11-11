@@ -112,10 +112,6 @@ class EmailSettingsController {
 		);
 	}
 
-	/**
-	 * @param WP_REST_Request $request Request.
-	 * @return WP_REST_Response|WP_Error
-	 */
 	public function send_test( WP_REST_Request $request ) {
 		$accent = Helper::sanitize_accent( (string) $request->get_param( 'accent' ) );
 

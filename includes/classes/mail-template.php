@@ -23,14 +23,6 @@ class MailTemplate {
 		'danger'  => [ '#FEE2E2', '#991B1B' ],
 	];
 
-	/**
-	 * @param array  $content  MailDefaults::build() result.
-	 * @param string $type     html|plain.
-	 * @param array  $settings Site settings (Helper::get_settings()).
-	 * @param string $accent   Brand colour (the booked form's accent).
-	 * @param string $to       Recipient address, shown on the "to" line.
-	 * @return string
-	 */
 	public static function render( array $content, string $type, array $settings, string $accent, string $to ): string {
 		$accent = \GembookingSimpleBookingForm\Helper::sanitize_accent( $accent );
 		$file   = 'plain' === $type ? 'plain.php' : 'layout.php';

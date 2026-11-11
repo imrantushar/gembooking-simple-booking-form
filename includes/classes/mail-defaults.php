@@ -35,12 +35,6 @@ class MailDefaults {
 		'customer_reschedule_expired'  => 'customer',
 	];
 
-	/**
-	 * @param string $event   Key of self::AUDIENCE.
-	 * @param array  $booking Booking row (or a sample).
-	 * @param array  $ctx     Optional: `previous` => [start,end] unix, `sample` => true (links become "#").
-	 * @return array
-	 */
 	public static function build( string $event, array $booking, array $ctx = [] ): array {
 		$audience = self::AUDIENCE[ $event ] ?? 'customer';
 		$tz       = new \DateTimeZone( (string) $booking['timezone'] );

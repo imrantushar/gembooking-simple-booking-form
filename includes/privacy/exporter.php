@@ -13,11 +13,6 @@ class Exporter {
 
 	const PER_PAGE = 50;
 
-	/**
-	 * @param string $email_address Email of the person.
-	 * @param int    $page          1-based page.
-	 * @return array
-	 */
 	public static function export( $email_address, $page = 1 ): array {
 		$page = max( 1, (int) $page );
 		$rows = BookingRepository::find_by_email( sanitize_email( (string) $email_address ), $page, self::PER_PAGE );

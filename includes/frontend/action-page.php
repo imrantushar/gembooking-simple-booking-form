@@ -108,11 +108,6 @@ class ActionPage {
 		$this->render( 'confirm', $action, $booking, '' );
 	}
 
-	/**
-	 * @param string $action confirm|decline|cancel.
-	 * @param int    $id     Booking id.
-	 * @return array|\WP_Error
-	 */
 	private function execute( string $action, int $id ) {
 		switch ( $action ) {
 			case 'confirm':

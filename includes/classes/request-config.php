@@ -15,10 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class RequestConfig {
 
-	/**
-	 * @param WP_REST_Request $request Request with `config` and `sig` params.
-	 * @return array{config:array,page_url:string}|WP_Error
-	 */
 	public static function verify( WP_REST_Request $request ) {
 		$verified = ConfigSigner::verify(
 			(string) $request->get_param( 'config' ),

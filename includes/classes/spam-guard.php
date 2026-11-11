@@ -29,12 +29,6 @@ class SpamGuard {
 		return '' === $ip ? '' : hash( 'sha256', $ip . wp_salt( 'auth' ) );
 	}
 
-	/**
-	 * @param string $honeypot Value of the hidden field (must be empty).
-	 * @param int    $fill_ms  Milliseconds the visitor spent on the form.
-	 * @param string $email    Customer email, for the per-email limit.
-	 * @return true|WP_Error
-	 */
 	public static function check( string $honeypot, int $fill_ms, string $email ) {
 		if ( '' !== $honeypot ) {
 			return new WP_Error( 'gsbf_spam', __( 'Could not send the request. Please try again.', 'gembooking-simple-booking-form' ), [ 'status' => 400 ] );
