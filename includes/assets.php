@@ -68,11 +68,8 @@ class Assets {
 			$version,
 			[ 'in_footer' => true ]
 		);
-		wp_add_inline_script(
-			$handle,
-			'window.' . self::GLOBAL_OBJECT . ' = ' . wp_json_encode( $data ) . ';',
-			'before'
-		);
+		// Exposes window.GsbfGlobal to the script, printed before it.
+		wp_localize_script( $handle, self::GLOBAL_OBJECT, $data );
 		wp_set_script_translations( $handle, 'gembooking-simple-booking-form', GSBF_ROOT_DIR_PATH . 'languages' );
 
 		if ( file_exists( GSBF_ASSETS_DIR_PATH . 'build/' . $name . '.css' ) ) {
@@ -86,9 +83,6 @@ class Assets {
 		}
 	}
 
-	/**
-	 * @return array
-	 */
 	private function frontend_data(): array {
 		return [
 			'restUrl' => esc_url_raw( rest_url( GSBF_REST_NAMESPACE . '/' ) ),

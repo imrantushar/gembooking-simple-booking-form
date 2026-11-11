@@ -1,6 +1,6 @@
 === GemBooking Simple Booking Form ===
 Contributors: kodezen
-Tags: booking, appointment, scheduling, calendar, form
+Tags: block, booking, appointment, scheduling, calendar
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
