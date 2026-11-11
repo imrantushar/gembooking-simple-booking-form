@@ -68,6 +68,151 @@ export function SelectInput( { label, hint, value, options, onChange, size } ) {
 	);
 }
 
+/**
+ * A select you can type into to filter the options. Arrow keys move, Enter
+ * picks, Escape closes. Options: [ { value, label } ].
+ */
+export function SearchableSelect( {
+	label,
+	hint,
+	value,
+	options,
+	onChange,
+	placeholder,
+} ) {
+	const id = useInstanceId( SearchableSelect, 'gsbf-search' );
+	const wrapRef = useRef( null );
+	const listRef = useRef( null );
+	const [ open, setOpen ] = useState( false );
+	const [ query, setQuery ] = useState( '' );
+	const [ active, setActive ] = useState( 0 );
+
+	const selected = options.find(
+		( option ) => String( option.value ) === String( value )
+	);
+	const needle = query.trim().toLowerCase();
+	const filtered = needle
+		? options.filter(
+				( option ) =>
+					option.label.toLowerCase().includes( needle ) ||
+					String( option.value ).toLowerCase().includes( needle )
+			)
+		: options;
+
+	const close = () => {
+		setOpen( false );
+		setQuery( '' );
+	};
+
+	const pick = ( option ) => {
+		onChange( option.value );
+		close();
+	};
+
+	// Close on a click outside.
+	useEffect( () => {
+		if ( ! open ) {
+			return undefined;
+		}
+		const onDown = ( e ) => {
+			if ( wrapRef.current && ! wrapRef.current.contains( e.target ) ) {
+				close();
+			}
+		};
+		document.addEventListener( 'mousedown', onDown );
+		return () => document.removeEventListener( 'mousedown', onDown );
+	}, [ open ] );
+
+	// Keep the highlighted row in view.
+	useEffect( () => {
+		const row = listRef.current?.children[ active ];
+		if ( open && row && row.scrollIntoView ) {
+			row.scrollIntoView( { block: 'nearest' } );
+		}
+	}, [ active, open ] );
+
+	const onKeyDown = ( e ) => {
+		if ( e.key === 'ArrowDown' ) {
+			e.preventDefault();
+			setOpen( true );
+			setActive( ( i ) => Math.min( i + 1, filtered.length - 1 ) );
+		} else if ( e.key === 'ArrowUp' ) {
+			e.preventDefault();
+			setActive( ( i ) => Math.max( i - 1, 0 ) );
+		} else if ( e.key === 'Enter' ) {
+			e.preventDefault();
+			if ( open && filtered[ active ] ) {
+				pick( filtered[ active ] );
+			}
+		} else if ( e.key === 'Escape' ) {
+			close();
+		}
+	};
+
+	return (
+		<Field label={ label } hint={ hint } htmlFor={ id }>
+			<div className="gsbf-sb-search" ref={ wrapRef }>
+				<input
+					id={ id }
+					type="text"
+					role="combobox"
+					aria-expanded={ open }
+					aria-controls={ id + '-list' }
+					autoComplete="off"
+					className="gsbf-sb-input is-select"
+					placeholder={ open ? selected?.label : placeholder }
+					value={ open ? query : ( selected?.label ?? '' ) }
+					onFocus={ () => setOpen( true ) }
+					onClick={ () => setOpen( true ) }
+					onChange={ ( e ) => {
+						setQuery( e.target.value );
+						setActive( 0 );
+						setOpen( true );
+					} }
+					onKeyDown={ onKeyDown }
+				/>
+				{ open && (
+					<ul
+						id={ id + '-list' }
+						role="listbox"
+						className="gsbf-sb-search__list"
+						ref={ listRef }
+					>
+						{ filtered.length === 0 && (
+							<li className="gsbf-sb-search__empty">
+								No results
+							</li>
+						) }
+						{ filtered.map( ( option, i ) => (
+							<li
+								key={ option.value }
+								role="option"
+								aria-selected={
+									String( option.value ) === String( value )
+								}
+								className={ `gsbf-sb-search__option${
+									i === active ? ' is-active' : ''
+								}${
+									String( option.value ) === String( value )
+										? ' is-selected'
+										: ''
+								}` }
+								onMouseEnter={ () => setActive( i ) }
+								onMouseDown={ ( e ) => {
+									e.preventDefault();
+									pick( option );
+								} }
+							>
+								{ option.label }
+							</li>
+						) ) }
+					</ul>
+				) }
+			</div>
+		</Field>
+	);
+}
+
 export function TextAreaInput( { label, hint, ...props } ) {
 	const id = useInstanceId( TextAreaInput, 'gsbf-area' );
 	return (

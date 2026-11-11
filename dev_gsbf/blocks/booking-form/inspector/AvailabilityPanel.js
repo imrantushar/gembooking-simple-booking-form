@@ -1,6 +1,11 @@
 import { useState } from '@wordpress/element';
 import { __, _n, sprintf } from '@wordpress/i18n';
-import { Chips, NumberInput, SelectInput } from '../../../components/ui';
+import {
+	Chips,
+	NumberInput,
+	SearchableSelect,
+	SelectInput,
+} from '../../../components/ui';
 import { ADVANCE_PRESETS, BUFFER_PRESETS, LIMITS } from '../../../utils/config';
 import { formatMinutes, timezoneLabel } from '../../../utils/time';
 
@@ -198,7 +203,7 @@ export default function AvailabilityPanel( { attributes, setAttributes } ) {
 					}
 				/>
 			) }
-			<SelectInput
+			<SearchableSelect
 				label={ __( 'Timezone', 'gembooking-simple-booking-form' ) }
 				value={ attributes.timezone }
 				options={ zones.map( ( zone ) => ( {

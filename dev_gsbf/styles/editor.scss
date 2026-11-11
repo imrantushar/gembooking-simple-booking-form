@@ -118,6 +118,55 @@
 	}
 }
 
+/* ---- searchable select (timezone) ----------------------------------------- */
+
+.gsbf-sb-search {
+	position: relative;
+}
+
+.gsbf-sb-search__list {
+	position: absolute;
+	z-index: 20;
+	top: calc(100% + 4px);
+	left: 0;
+	right: 0;
+	max-height: 240px;
+	margin: 0;
+	padding: 4px;
+	overflow-y: auto;
+	list-style: none;
+	border: 1px solid #d0d5dd;
+	border-radius: 6px;
+	background: #fff;
+	box-shadow: 0 8px 24px rgba(20, 26, 36, 0.12);
+}
+
+.gsbf-sb-search__option,
+.gsbf-sb-search__empty {
+	margin: 0;
+	padding: 7px 8px;
+	border-radius: 4px;
+	font-size: 13px;
+	line-height: 18px;
+	color: #141a24;
+}
+
+.gsbf-sb-search__option {
+	cursor: pointer;
+
+	&.is-active {
+		background: #f2f4f7;
+	}
+
+	&.is-selected {
+		font-weight: 600;
+	}
+}
+
+.gsbf-sb-search__empty {
+	color: #646c73;
+}
+
 /* ---- segmented control (layout, duration, preview device) ---------------- */
 
 .gsbf-seg-control {
