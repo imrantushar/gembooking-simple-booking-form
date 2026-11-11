@@ -10,10 +10,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// All queries here run against this plugin's own table, whose name comes from
-// the table() helper (never from user input); every value is passed through
+// All queries here run against this plugin's own table. The table name goes
+// through the %i identifier placeholder and every value through
 // $wpdb->prepare() or $wpdb->insert()/update().
-// phpcs:disable WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+// phpcs:disable WordPress.DB.DirectDatabaseQuery
 
 /**
  * The only place that talks to the bookings table.
@@ -129,7 +129,7 @@ class BookingRepository {
 		global $wpdb;
 
 		$row = $wpdb->get_row(
-			$wpdb->prepare( 'SELECT * FROM ' . self::table() . ' WHERE id = %d', $id ),
+			$wpdb->prepare( 'SELECT * FROM %i WHERE id = %d', self::table(), $id ),
 			ARRAY_A
 		);
 
@@ -155,7 +155,8 @@ class BookingRepository {
 
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
-				'SELECT id, start_utc, end_utc FROM ' . self::table() . ' WHERE form_id = %s AND start_utc < %s AND end_utc > %s',
+				'SELECT id, start_utc, end_utc FROM %i WHERE form_id = %s AND start_utc < %s AND end_utc > %s',
+				self::table(),
 				$form_id,
 				Helper::utc( $to ),
 				Helper::utc( $from )
@@ -187,7 +188,8 @@ class BookingRepository {
 
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
-				'SELECT * FROM ' . self::table() . " WHERE status = 'pending' AND requested_at < %s ORDER BY requested_at ASC LIMIT %d",
+				"SELECT * FROM %i WHERE status = 'pending' AND requested_at < %s ORDER BY requested_at ASC LIMIT %d",
+				self::table(),
 				Helper::utc( $older_than ),
 				$limit
 			),
@@ -210,7 +212,8 @@ class BookingRepository {
 
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
-				'SELECT * FROM ' . self::table() . ' WHERE email = %s ORDER BY id ASC LIMIT %d OFFSET %d',
+				'SELECT * FROM %i WHERE email = %s ORDER BY id ASC LIMIT %d OFFSET %d',
+				self::table(),
 				$email,
 				$per_page,
 				max( 0, ( $page - 1 ) * $per_page )
@@ -233,7 +236,8 @@ class BookingRepository {
 
 		$changed = $wpdb->query(
 			$wpdb->prepare(
-				'UPDATE ' . self::table() . " SET name = %s, email = CONCAT('erased-', id, '@invalid.invalid'), phone = NULL, ip_hash = NULL, updated_at = %s WHERE email = %s",
+				"UPDATE %i SET name = %s, email = CONCAT('erased-', id, '@invalid.invalid'), phone = NULL, ip_hash = NULL, updated_at = %s WHERE email = %s",
+				self::table(),
 				__( 'Erased', 'gembooking-simple-booking-form' ),
 				Helper::utc(),
 				$email
