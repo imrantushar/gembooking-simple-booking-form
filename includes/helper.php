@@ -61,12 +61,13 @@ class Helper {
 	public static function sanitize_settings( array $raw ): array {
 		$defaults = self::default_settings();
 
-		$approval = $raw['approval'] ?? $defaults['approval'];
-		$type     = $raw['type'] ?? $defaults['type'];
+		$approval = self::scalar( $raw['approval'] ?? null, $defaults['approval'] );
+		$type     = self::scalar( $raw['type'] ?? null, $defaults['type'] );
 
-		$admin_to   = sanitize_email( (string) ( $raw['adminTo'] ?? '' ) );
-		$from_email = sanitize_email( (string) ( $raw['fromEmail'] ?? '' ) );
-		$from_name  = sanitize_text_field( (string) ( $raw['fromName'] ?? '' ) );
+		$admin_to   = sanitize_email( self::scalar( $raw['adminTo'] ?? null, '' ) );
+		$from_email = sanitize_email( self::scalar( $raw['fromEmail'] ?? null, '' ) );
+		$from_name  = sanitize_text_field( self::scalar( $raw['fromName'] ?? null, '' ) );
+		$logo       = max( 0, (int) self::scalar( $raw['logo'] ?? null, '0' ) );
 
 		return [
 			'approval'   => in_array( $approval, [ 'manual', 'auto' ], true ) ? $approval : 'manual',
@@ -74,9 +75,22 @@ class Helper {
 			'fromName'   => '' !== $from_name ? $from_name : $defaults['fromName'],
 			'fromEmail'  => is_email( $from_email ) ? $from_email : $defaults['fromEmail'],
 			'type'       => in_array( $type, [ 'html', 'plain' ], true ) ? $type : 'html',
-			'logo'       => max( 0, (int) ( $raw['logo'] ?? 0 ) ),
-			'footerHtml' => wp_kses( (string) ( $raw['footerHtml'] ?? $defaults['footerHtml'] ), self::footer_allowed_html() ),
+			// Only a real image attachment can be the logo.
+			'logo'       => $logo && wp_attachment_is_image( $logo ) ? $logo : 0,
+			'footerHtml' => wp_kses( self::scalar( $raw['footerHtml'] ?? null, $defaults['footerHtml'] ), self::footer_allowed_html() ),
 		];
+	}
+
+	/**
+	 * A string from untrusted input; arrays and objects give the fallback
+	 * instead of an "Array to string conversion" warning.
+	 *
+	 * @param mixed  $value    Raw value.
+	 * @param string $fallback Value to use when $value is not a scalar.
+	 * @return string
+	 */
+	private static function scalar( $value, string $fallback ): string {
+		return is_scalar( $value ) ? (string) $value : $fallback;
 	}
 
 	/**

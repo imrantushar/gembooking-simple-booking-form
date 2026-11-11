@@ -103,10 +103,10 @@ class Config {
 	 * numbers and give the default.
 	 *
 	 * @param mixed $value   Raw value.
-	 * @param int   $default Value to use when $value is not a whole number.
+	 * @param int   $fallback Value to use when $value is not a whole number.
 	 * @return int
 	 */
-	private static function whole( $value, int $default ): int {
+	private static function whole( $value, int $fallback ): int {
 		if ( is_int( $value ) ) {
 			return $value;
 		}
@@ -117,7 +117,7 @@ class Config {
 			return (int) trim( $value );
 		}
 
-		return $default;
+		return $fallback;
 	}
 
 	private static function truncate( string $value, int $length ): string {

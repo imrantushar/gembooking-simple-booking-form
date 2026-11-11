@@ -2,6 +2,8 @@
  * Date/time helpers. All "local" values are in the form's IANA timezone.
  */
 
+import { _x } from '@wordpress/i18n';
+
 const pad = ( n ) => String( n ).padStart( 2, '0' );
 
 /** Y-m-d / minutes-after-midnight of a Unix timestamp (seconds) in a timezone. */
@@ -99,7 +101,11 @@ export function formatMinutes( minutes, h24 ) {
 	if ( h24 ) {
 		return `${ pad( h ) }:${ pad( m ) }`;
 	}
-	return `${ h % 12 || 12 }:${ pad( m ) } ${ h < 12 ? 'AM' : 'PM' }`;
+	const meridiem =
+		h < 12
+			? _x( 'AM', 'time of day', 'gembooking-simple-booking-form' )
+			: _x( 'PM', 'time of day', 'gembooking-simple-booking-form' );
+	return `${ h % 12 || 12 }:${ pad( m ) } ${ meridiem }`;
 }
 
 export function formatRange( startMinutes, duration, h24 ) {

@@ -6,6 +6,7 @@
 
 import { useEffect, useRef, useState } from '@wordpress/element';
 import { useInstanceId } from '@wordpress/compose';
+import { __ } from '@wordpress/i18n';
 import { isDigits } from '../../utils/validate';
 
 export function Field( { label, hint, htmlFor, children } ) {
@@ -180,7 +181,10 @@ export function SearchableSelect( {
 					>
 						{ filtered.length === 0 && (
 							<li className="gsbf-sb-search__empty">
-								No results
+								{ __(
+									'No results',
+									'gembooking-simple-booking-form'
+								) }
 							</li>
 						) }
 						{ filtered.map( ( option, i ) => (

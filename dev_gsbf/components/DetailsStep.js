@@ -95,7 +95,9 @@ export default function DetailsStep( {
 
 			{ /* Honeypot: real visitors never see or fill this. */ }
 			<div className="gsbf-hp" aria-hidden="true">
-				<label htmlFor="gsbf-website">Website</label>
+				<label htmlFor="gsbf-website">
+					{ __( 'Website', 'gembooking-simple-booking-form' ) }
+				</label>
 				<input
 					id="gsbf-website"
 					ref={ honeypotRef }

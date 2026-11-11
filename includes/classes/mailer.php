@@ -115,7 +115,7 @@ class Mailer {
 	 * @param string $email Email address.
 	 */
 	private static function address( string $name, string $email ): string {
-		$name = trim( str_replace( [ '"', "\r", "\n", '<', '>' ], '', $name ) );
+		$name = trim( str_replace( [ '"', '\\', "\r", "\n", '<', '>' ], '', $name ) );
 
 		return '' === $name ? $email : '"' . $name . '" <' . $email . '>';
 	}

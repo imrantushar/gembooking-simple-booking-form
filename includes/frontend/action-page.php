@@ -52,6 +52,8 @@ class ActionPage {
 
 		nocache_headers();
 		header( 'X-Robots-Tag: noindex, nofollow' );
+		header( 'X-Frame-Options: DENY' ); // The page holds a one-click action; never allow framing.
+		header( 'Referrer-Policy: no-referrer' ); // The URL carries a token.
 
 		if ( ! BookingToken::verify( $id, $token, $action ) ) {
 			$this->render( 'error', $action, null, __( 'This link is invalid or has expired.', 'gembooking-simple-booking-form' ), 403 );

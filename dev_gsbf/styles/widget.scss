@@ -48,6 +48,126 @@
 	}
 }
 
+// Theme hardening. Themes style bare `button`, `input[type="text"]` and their
+// :hover/:focus/:active states (specificity 0,1,1), which beats a single
+// class. These rules are scoped under .gsbf-form (0,2,0+) and restate the
+// widget's own look, including every state, so a theme cannot repaint it.
+// Rules written later with a state class (.has-error, [readonly]) still win
+// because they come after this block with the same specificity.
+.gsbf-form {
+
+	button,
+	input {
+		min-height: 0;
+		text-transform: none;
+		text-shadow: none;
+		background-image: none;
+		text-decoration: none;
+		transition: none;
+	}
+
+	.gsbf-linkbtn {
+		min-height: 32px;
+	}
+
+	.gsbf-input {
+		height: 46px;
+		padding: 0 12px;
+		border: 1px solid #d0d5dd;
+		border-radius: 4px;
+		background-color: #fff;
+		color: var(--gsbf-text);
+		box-shadow: none;
+	}
+
+	.gsbf-btn-primary,
+	.gsbf-btn-primary:hover,
+	.gsbf-btn-primary:focus,
+	.gsbf-btn-primary:active {
+		border: 0;
+		background-color: var(--gsbf-accent);
+		color: #fff;
+		box-shadow: none;
+	}
+
+	.gsbf-btn-primary:disabled {
+		background-color: #b5babf;
+	}
+
+	.gsbf-btn-secondary,
+	.gsbf-btn-secondary:hover,
+	.gsbf-btn-secondary:focus,
+	.gsbf-btn-secondary:active {
+		border: 1px solid var(--gsbf-border);
+		background-color: #fff;
+		color: var(--gsbf-text);
+		box-shadow: none;
+	}
+
+	.gsbf-nav,
+	.gsbf-nav:hover,
+	.gsbf-nav:focus,
+	.gsbf-nav:active {
+		border: 1px solid var(--gsbf-border);
+		background-color: #fff;
+		color: var(--gsbf-text);
+		box-shadow: none;
+	}
+
+	.gsbf-day,
+	.gsbf-day:hover,
+	.gsbf-day:focus,
+	.gsbf-day:active {
+		border: 1px solid #eef0f2;
+		background-color: var(--gsbf-surface);
+		color: var(--gsbf-text);
+		box-shadow: none;
+	}
+
+	.gsbf-day.is-selected,
+	.gsbf-day.is-selected:hover,
+	.gsbf-day.is-selected:focus,
+	.gsbf-day.is-selected:active {
+		border-color: transparent;
+		background-color: var(--gsbf-accent);
+		color: #fff;
+	}
+
+	.gsbf-day.is-off,
+	.gsbf-day.is-off:hover,
+	.gsbf-day.is-off:focus,
+	.gsbf-day.is-off:active {
+		border-color: transparent;
+		background-color: transparent;
+		color: #8e949a;
+	}
+
+	.gsbf-slot,
+	.gsbf-slot:hover,
+	.gsbf-slot:focus,
+	.gsbf-slot:active {
+		border: 1px solid var(--gsbf-border);
+		background-color: #fff;
+		color: var(--gsbf-text);
+		box-shadow: none;
+	}
+
+	.gsbf-slot.is-selected,
+	.gsbf-slot.is-selected:hover,
+	.gsbf-slot.is-selected:focus,
+	.gsbf-slot.is-selected:active {
+		border-color: var(--gsbf-accent);
+		background-color: var(--gsbf-accent);
+		color: #fff;
+	}
+
+	.gsbf-slot:disabled,
+	.gsbf-slot:disabled:hover {
+		background-color: var(--gsbf-surface);
+		color: #8e949a;
+	}
+}
+
 .gsbf-frame {
 	width: 100%;
 	background: #fff;
