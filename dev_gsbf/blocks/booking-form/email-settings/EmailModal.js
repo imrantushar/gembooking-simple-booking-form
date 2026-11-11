@@ -116,6 +116,7 @@ export default function EmailModal( { accent, setAccent, onClose, onSaved } ) {
 				'gembooking-simple-booking-form'
 			) }
 			onRequestClose={ onClose }
+			isFullScreen
 			className="gsbf-email-modal"
 		>
 			<div className="gsbf-modal-tabs" role="tablist">
