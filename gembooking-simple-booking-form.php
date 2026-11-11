@@ -13,7 +13,7 @@
  * Domain Path: /languages
  * Requires at least: 6.4
  * Requires PHP: 8.1
- */
+*/
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
