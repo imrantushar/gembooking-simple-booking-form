@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-11T10:39:52+00:00\n"
+"POT-Creation-Date: 2026-11-11T11:42:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: gembooking-simple-booking-form\n"
@@ -45,22 +45,22 @@ msgstr ""
 msgid "GemBooking Simple Booking Form requires PHP version %1$s or higher. Your site is currently running PHP %2$s. Please ask your hosting provider to update PHP."
 msgstr ""
 
-#: includes/api/availability-controller.php:77
+#: includes/api/availability-controller.php:73
 msgid "Provide a month or a date."
 msgstr ""
 
-#: includes/api/booking-controller.php:168
+#: includes/api/booking-controller.php:160
 #: includes/classes/booking-service.php:133
 #: includes/classes/booking-service.php:155
 msgid "This booking no longer exists."
 msgstr ""
 
-#: includes/api/booking-controller.php:206
+#: includes/api/booking-controller.php:194
 #: includes/frontend/action-page.php:88
 msgid "This link is invalid or has expired."
 msgstr ""
 
-#: includes/api/email-settings-controller.php:123
+#: includes/api/email-settings-controller.php:119
 msgid "The test email could not be sent. Check the admin email address and your site email setup."
 msgstr ""
 
@@ -102,240 +102,240 @@ msgstr ""
 msgid "That time is not available. Please choose another time."
 msgstr ""
 
-#: includes/classes/booking-service.php:294
+#: includes/classes/booking-service.php:289
 #: dev_gsbf/components/BookingWidget.js:196
 msgid "Enter your name."
 msgstr ""
 
-#: includes/classes/booking-service.php:297
+#: includes/classes/booking-service.php:292
 #: dev_gsbf/components/BookingWidget.js:202
 msgid "Enter a valid email address."
 msgstr ""
 
-#: includes/classes/booking-service.php:300
+#: includes/classes/booking-service.php:295
 #: dev_gsbf/components/BookingWidget.js:208
 msgid "Enter your phone number."
 msgstr ""
 
-#: includes/classes/booking-service.php:313
+#: includes/classes/booking-service.php:308
 msgid "This request was already handled, cancelled or has expired."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:67
+#: includes/classes/mail-defaults.php:61
 msgid "New booking request: {event} @ {short}"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:68
+#: includes/classes/mail-defaults.php:62
 msgid "You have a new booking request."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:70
-#: includes/classes/mail-defaults.php:77
-#: includes/classes/mail-defaults.php:84
-#: includes/classes/mail-defaults.php:91
-#: includes/classes/mail-defaults.php:98
+#: includes/classes/mail-defaults.php:64
+#: includes/classes/mail-defaults.php:71
+#: includes/classes/mail-defaults.php:78
+#: includes/classes/mail-defaults.php:85
+#: includes/classes/mail-defaults.php:92
 msgid "{event} with {name}"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:71
+#: includes/classes/mail-defaults.php:65
 msgid "{name} wants to book a time with you. Confirm or decline from this email. No WordPress login needed."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:74
+#: includes/classes/mail-defaults.php:68
 msgid "New booking: {event} @ {short}"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:75
+#: includes/classes/mail-defaults.php:69
 msgid "A new booking was confirmed automatically."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:78
+#: includes/classes/mail-defaults.php:72
 msgid "{name} booked a time with you. It is already confirmed, nothing else to do."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:81
+#: includes/classes/mail-defaults.php:75
 msgid "Reschedule request: {event} @ {short}"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:82
+#: includes/classes/mail-defaults.php:76
 msgid "A customer asked to move their booking."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:85
+#: includes/classes/mail-defaults.php:79
 msgid "{name} asked to move this booking to the time below. Their previous time is already released. Confirm the new time, or decline to cancel the booking."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:88
+#: includes/classes/mail-defaults.php:82
 msgid "Booking rescheduled: {event} @ {short}"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:89
+#: includes/classes/mail-defaults.php:83
 msgid "A booking was rescheduled."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:92
+#: includes/classes/mail-defaults.php:86
 msgid "{name} moved their booking to a new time. It stays confirmed."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:95
+#: includes/classes/mail-defaults.php:89
 msgid "Booking cancelled: {event} @ {short}"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:96
+#: includes/classes/mail-defaults.php:90
 msgid "A booking was cancelled."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:99
+#: includes/classes/mail-defaults.php:93
 msgid "{name} cancelled this booking. The time is available again."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:102
+#: includes/classes/mail-defaults.php:96
 msgid "We received your booking request: {event}"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:103
+#: includes/classes/mail-defaults.php:97
 msgid "Your booking is pending. It is not confirmed yet."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:105
+#: includes/classes/mail-defaults.php:99
 msgid "Hi {name}, thanks for your request. The time below is held for you, but your booking is pending until the host confirms it. We will email you again as soon as they do. If it is not confirmed within 48 hours, the time is released."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:108
+#: includes/classes/mail-defaults.php:102
 msgid "Your booking is confirmed: {event}"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:109
+#: includes/classes/mail-defaults.php:103
 msgid "Your booking is confirmed."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:111
+#: includes/classes/mail-defaults.php:105
 msgid "Hi {name}, your booking is confirmed. We look forward to speaking with you. Reply to this email if you need to change anything."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:114
+#: includes/classes/mail-defaults.php:108
 msgid "Your booking has a new time: {event}"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:115
+#: includes/classes/mail-defaults.php:109
 msgid "Your booking was moved to the new time."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:117
+#: includes/classes/mail-defaults.php:111
 msgid "Hi {name}, your booking is now at the time below and it is confirmed."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:120
+#: includes/classes/mail-defaults.php:114
 msgid "Reschedule request received: {event}"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:121
+#: includes/classes/mail-defaults.php:115
 msgid "Waiting for the host to approve the new time."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:123
+#: includes/classes/mail-defaults.php:117
 msgid "Hi {name}, we received your request to move your booking. Your previous time has been released. If the host does not approve the new time within 48 hours, your booking will be cancelled."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:126
+#: includes/classes/mail-defaults.php:120
 msgid "Your booking request was declined: {event}"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:127
+#: includes/classes/mail-defaults.php:121
 msgid "Your booking request was declined."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:129
+#: includes/classes/mail-defaults.php:123
 msgid "Hi {name}, the host could not accept this time. The time slot is free again and you are welcome to choose another time."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:132
+#: includes/classes/mail-defaults.php:126
 msgid "Your reschedule request was not approved: {event}"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:133
+#: includes/classes/mail-defaults.php:127
 msgid "Your reschedule request was not approved."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:135
+#: includes/classes/mail-defaults.php:129
 msgid "Hi {name}, the host did not approve the new time, so your booking has been cancelled and both times are released. You can book again at any time."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:138
+#: includes/classes/mail-defaults.php:132
 msgid "Your booking was cancelled: {event}"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:139
+#: includes/classes/mail-defaults.php:133
 msgid "Your booking was cancelled."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:141
+#: includes/classes/mail-defaults.php:135
 msgid "Hi {name}, your booking has been cancelled and the time is available again."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:144
+#: includes/classes/mail-defaults.php:138
 msgid "Your booking request was not confirmed in time: {event}"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:145
+#: includes/classes/mail-defaults.php:139
 msgid "Your booking request was not confirmed in time."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:147
+#: includes/classes/mail-defaults.php:141
 msgid "Hi {name}, the host did not confirm this request within 48 hours, so the time slot was released. You can choose another time."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:150
+#: includes/classes/mail-defaults.php:144
 msgid "Your reschedule request was not approved in time: {event}"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:151
+#: includes/classes/mail-defaults.php:145
 msgid "Your reschedule request was not approved in time."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:153
+#: includes/classes/mail-defaults.php:147
 msgid "Hi {name}, the host did not approve the new time within 48 hours, so your booking has been cancelled and both times are released. You can book again at any time."
 msgstr ""
 
-#: includes/classes/mail-defaults.php:165
+#: includes/classes/mail-defaults.php:159
 msgid "When"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:168
+#: includes/classes/mail-defaults.php:162
 msgid "Previous"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:172
+#: includes/classes/mail-defaults.php:166
 msgid "Who"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:174
+#: includes/classes/mail-defaults.php:168
 msgid "Ref"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:187
+#: includes/classes/mail-defaults.php:181
 #: templates/action-page.php:24
 #: dev_gsbf/components/BookingWidget.js:390
 msgid "Confirm booking"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:188
+#: includes/classes/mail-defaults.php:182
 msgid "Decline"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:196
+#: includes/classes/mail-defaults.php:190
 msgid "View booking"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:197
+#: includes/classes/mail-defaults.php:191
 msgid "Reschedule"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:198
+#: includes/classes/mail-defaults.php:192
 msgid "Cancel"
 msgstr ""
 
-#: includes/classes/mail-defaults.php:207
+#: includes/classes/mail-defaults.php:201
 msgid "Book again"
 msgstr ""
 
@@ -349,19 +349,19 @@ msgstr ""
 msgid "30-minute consultation"
 msgstr ""
 
-#: includes/classes/request-config.php:31
+#: includes/classes/request-config.php:27
 msgid "This form is out of date. Please reload the page and try again."
 msgstr ""
 
-#: includes/classes/spam-guard.php:40
+#: includes/classes/spam-guard.php:34
 msgid "Could not send the request. Please try again."
 msgstr ""
 
-#: includes/classes/spam-guard.php:44
+#: includes/classes/spam-guard.php:38
 msgid "That was very quick. Please check your details and try again."
 msgstr ""
 
-#: includes/classes/spam-guard.php:79
+#: includes/classes/spam-guard.php:73
 msgid "Too many requests. Please try again later."
 msgstr ""
 
@@ -373,15 +373,15 @@ msgstr ""
 msgid "This request was already handled, cancelled or has expired. Nothing more to do."
 msgstr ""
 
-#: includes/frontend/action-page.php:130
+#: includes/frontend/action-page.php:125
 msgid "Booking confirmed. The customer has been emailed."
 msgstr ""
 
-#: includes/frontend/action-page.php:132
+#: includes/frontend/action-page.php:127
 msgid "Booking declined. The customer has been emailed and the time is free again."
 msgstr ""
 
-#: includes/frontend/action-page.php:134
+#: includes/frontend/action-page.php:129
 msgid "Your booking has been cancelled. We emailed you a confirmation."
 msgstr ""
 
@@ -400,26 +400,26 @@ msgstr ""
 msgid "Booking names, emails and phone numbers were anonymised. The booked time slots were kept so that later bookings cannot double up."
 msgstr ""
 
-#: includes/privacy/exporter.php:30
+#: includes/privacy/exporter.php:25
 #: templates/action-page.php:45
 msgid "Booking ref"
 msgstr ""
 
-#: includes/privacy/exporter.php:34
+#: includes/privacy/exporter.php:29
 #: templates/action-page.php:39
 #: dev_gsbf/components/BookingWidget.js:578
 msgid "Event"
 msgstr ""
 
-#: includes/privacy/exporter.php:38
+#: includes/privacy/exporter.php:33
 msgid "Start"
 msgstr ""
 
-#: includes/privacy/exporter.php:42
+#: includes/privacy/exporter.php:37
 msgid "Status"
 msgstr ""
 
-#: includes/privacy/exporter.php:46
+#: includes/privacy/exporter.php:41
 #: templates/action-page.php:43
 #: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:40
 #: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:48
@@ -428,7 +428,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: includes/privacy/exporter.php:50
+#: includes/privacy/exporter.php:45
 #: templates/action-page.php:44
 #: dev_gsbf/blocks/booking-form/email-settings/SettingsTab.js:38
 #: dev_gsbf/components/BookingWidget.js:598
@@ -436,12 +436,12 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: includes/privacy/exporter.php:56
+#: includes/privacy/exporter.php:51
 #: dev_gsbf/components/DetailsStep.js:79
 msgid "Phone"
 msgstr ""
 
-#: includes/privacy/exporter.php:63
+#: includes/privacy/exporter.php:58
 msgid "Bookings"
 msgstr ""
 
