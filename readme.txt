@@ -72,6 +72,15 @@ Bookings store the name, email and optional phone number of the person who booke
 * Nothing is sent to external services.
 * No cookies are set.
 
+= Source code and build =
+
+The JavaScript and CSS in `assets/build/` are compiled from the human-readable source included in this plugin:
+
+* `dev_gsbf/` – React (block editor and front-end form) and Sass source.
+* `package.json` and `webpack.config.js` – build configuration, using [@wordpress/scripts](https://www.npmjs.com/package/@wordpress/scripts).
+
+To rebuild the compiled files, run `npm install` and then `npm run build` in the plugin folder.
+
 == Installation ==
 
 1. Upload the plugin to `/wp-content/plugins/` or install it from the Plugins screen, then activate it.

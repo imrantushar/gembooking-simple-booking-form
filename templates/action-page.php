@@ -3,7 +3,7 @@
  * Standalone page for the confirm / decline / cancel email links.
  *
  * Variables: $state (confirm|done|info|error), $action, $booking (public fields or null),
- * $message, $accent, $font, $site_name, $home_url.
+ * $message, $site_name, $home_url. Styles: the `gsbf-action-page` handle.
  *
  * @package GembookingSimpleBookingForm
  */
@@ -53,21 +53,7 @@ if ( $booking ) {
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
 <title><?php echo esc_html( $heading ); ?></title>
-<style>
-	body{margin:0;background:#F6F7F8;color:#141A24;font-family:<?php echo esc_html( $font ); ?>;font-size:14px;line-height:1.5}
-	.gsbf-ap{max-width:480px;margin:48px auto;padding:0 16px}
-	.gsbf-ap-card{background:#fff;border:1px solid #E0E4E8;border-radius:12px;padding:28px 24px;box-shadow:0 0 1px rgba(20,26,36,.2),0 1px 2px rgba(20,26,36,.1)}
-	.gsbf-ap h1{font-size:20px;font-weight:600;margin:0 0 6px}
-	.gsbf-ap p{margin:0 0 16px;color:#434A51}
-	.gsbf-ap dl{margin:0 0 20px;border:1px solid #E0E4E8;border-radius:8px}
-	.gsbf-ap dl div{display:flex;justify-content:space-between;gap:16px;padding:10px 14px;border-bottom:1px solid #EEF0F2}
-	.gsbf-ap dl div:last-child{border-bottom:0}
-	.gsbf-ap dt{color:#646C73}.gsbf-ap dd{margin:0;text-align:right;overflow-wrap:anywhere}
-	.gsbf-ap button,.gsbf-ap a.gsbf-ap-link{display:block;width:100%;box-sizing:border-box;height:46px;line-height:46px;padding:0 18px;border:0;border-radius:6px;background:<?php echo esc_html( $accent ); ?>;color:#fff;font:inherit;font-weight:500;text-align:center;text-decoration:none;cursor:pointer}
-	.gsbf-ap a.gsbf-ap-link{margin-top:12px;background:#fff;color:#141A24;border:1px solid #E0E4E8;line-height:44px}
-	.gsbf-ap button:focus-visible,.gsbf-ap a:focus-visible{outline:2px solid #141A24;outline-offset:2px}
-	.gsbf-ap small{display:block;margin-top:10px;color:#646C73;text-align:center}
-</style>
+<?php wp_print_styles( 'gsbf-action-page' ); ?>
 </head>
 <body>
 <main class="gsbf-ap">
