@@ -4,7 +4,7 @@ Tags: bookingform, booking, appointment, scheduling, calendar
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -72,6 +72,17 @@ Bookings store the name, email and optional phone number of the person who booke
 * Nothing is sent to external services.
 * No cookies are set.
 
+= Source code and build =
+
+The JavaScript and CSS in `assets/build/` are compiled from the human-readable source included in this plugin:
+
+* `dev_gsbf/` – React (block editor and front-end form) and Sass source.
+* `package.json` and `webpack.config.js` – build configuration, using [@wordpress/scripts](https://www.npmjs.com/package/@wordpress/scripts).
+
+To rebuild the compiled files, run `npm install` and then `npm run build` in the plugin folder.
+
+The full development repository is public on GitHub: [github.com/imrantushar/gembooking-simple-booking-form](https://github.com/imrantushar/gembooking-simple-booking-form)
+
 == Installation ==
 
 1. Upload the plugin to `/wp-content/plugins/` or install it from the Plugins screen, then activate it.
@@ -123,6 +134,11 @@ No. Nothing is sent to external services and no cookies are set.
 Yes. All text can be translated, and a translation template is included in the `languages` folder.
 
 == Changelog ==
+
+= 1.1.0 =
+* Fix: the confirm / decline / cancel page now loads its styles through the WordPress enqueue system.
+* Tweak: rely on WordPress.org language packs for translations.
+* Docs: document the bundled source code, build steps and public repository.
 
 = 1.0.0 =
 * First release.

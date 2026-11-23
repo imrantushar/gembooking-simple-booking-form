@@ -148,15 +148,40 @@ class ActionPage {
 			'action'    => $action,
 			'booking'   => $row ? BookingService::to_public( $row ) : null,
 			'message'   => $message,
-			'accent'    => Helper::sanitize_accent( $accent ),
-			'font'      => MailTemplate::FONT_STACK,
 			'site_name' => wp_specialchars_decode( (string) get_option( 'blogname', '' ), ENT_QUOTES ),
 			'home_url'  => $row ? BookingActionUrl::page_url( $row ) : home_url( '/' ),
 		];
+
+		$this->register_styles( Helper::sanitize_accent( $accent ) );
 
 		// phpcs:ignore WordPress.PHP.DontExtract.extract_extract -- scoped, explicit template variables.
 		extract( $vars, EXTR_SKIP );
 		include GSBF_TEMPLATES_DIR_PATH . 'action-page.php';
 		exit;
+	}
+
+	/**
+	 * Register the page's stylesheet plus its per-booking accent and font.
+	 *
+	 * The template prints it with wp_print_styles(), since this page exits
+	 * before wp_head() runs.
+	 *
+	 * @param string $accent Sanitized hex accent color.
+	 */
+	private function register_styles( string $accent ): void {
+		wp_register_style(
+			'gsbf-action-page',
+			GSBF_ASSETS_URI . 'css/action-page.css',
+			[],
+			GSBF_VERSION
+		);
+		wp_add_inline_style(
+			'gsbf-action-page',
+			sprintf(
+				':root{--gsbf-ap-font:%s;--gsbf-ap-accent:%s}',
+				wp_strip_all_tags( MailTemplate::FONT_STACK ),
+				$accent
+			)
+		);
 	}
 }

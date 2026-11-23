@@ -4,7 +4,7 @@
  * Plugin Name: GemBooking Simple Booking Form
  * Plugin URI: https://gembooking.net
  * Description: A simple appointment booking form block. Visitors pick a date and time, you confirm by email. No setup screens, double-booking protected.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Kodezen
  * Author URI: https://kodezen.com
  * License: GPLv2 or later
@@ -73,7 +73,7 @@ final class GembookingSimpleBookingForm {
 	}
 
 	public function define_constants() {
-		define( 'GSBF_VERSION', '1.0.0' );
+		define( 'GSBF_VERSION', '1.1.0' );
 		define( 'GSBF_SETTINGS_NAME', 'gsbf_settings' );
 		define( 'GSBF_PLUGIN_FILE', __FILE__ );
 		define( 'GSBF_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
@@ -108,9 +108,6 @@ final class GembookingSimpleBookingForm {
 	}
 
 	public function dispatch_hooks() {
-		// Register languages/ as this plugin's translation directory.
-		add_action( 'init', [ $this, 'load_textdomain' ], 0 );
-
 		GembookingSimpleBookingForm\Database::init();
 		GembookingSimpleBookingForm\Blocks::init();
 		GembookingSimpleBookingForm\Assets::init();
@@ -118,25 +115,6 @@ final class GembookingSimpleBookingForm {
 		GembookingSimpleBookingForm\Frontend::init();
 		GembookingSimpleBookingForm\Privacy::init();
 		GembookingSimpleBookingForm\Classes\CleanupExpiredBookings::init();
-	}
-
-	/**
-	 * Point WordPress at languages/ for this plugin's PHP translations.
-	 *
-	 * Runs on `init` (priority 0), not earlier: loading a textdomain before
-	 * `init` raises the `_load_textdomain_just_in_time` notice on WP 6.7+.
-	 *
-	 * @return void
-	 */
-	public function load_textdomain() {
-		// A .mo inside this plugin's own languages/ is reachable only through
-		// custom_paths[], which only load_plugin_textdomain() writes to.
-		// phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound -- registers the in-plugin languages/ dir, which language packs do not cover.
-		load_plugin_textdomain(
-			'gembooking-simple-booking-form',
-			false,
-			dirname( GSBF_PLUGIN_BASENAME ) . '/languages'
-		);
 	}
 
 	public function load_dependency() {
