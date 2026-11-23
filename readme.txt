@@ -81,6 +81,8 @@ The JavaScript and CSS in `assets/build/` are compiled from the human-readable s
 
 To rebuild the compiled files, run `npm install` and then `npm run build` in the plugin folder.
 
+The full development repository is public on GitHub: [github.com/imrantushar/gembooking-simple-booking-form](https://github.com/imrantushar/gembooking-simple-booking-form)
+
 == Installation ==
 
 1. Upload the plugin to `/wp-content/plugins/` or install it from the Plugins screen, then activate it.
