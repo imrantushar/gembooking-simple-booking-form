@@ -4,7 +4,7 @@ Tags: bookingform, booking, appointment, scheduling, calendar
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -134,6 +134,11 @@ No. Nothing is sent to external services and no cookies are set.
 Yes. All text can be translated, and a translation template is included in the `languages` folder.
 
 == Changelog ==
+
+= 1.1.0 =
+* Fix: the confirm / decline / cancel page now loads its styles through the WordPress enqueue system.
+* Tweak: rely on WordPress.org language packs for translations.
+* Docs: document the bundled source code, build steps and public repository.
 
 = 1.0.0 =
 * First release.
